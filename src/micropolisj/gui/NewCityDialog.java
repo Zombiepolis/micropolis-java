@@ -26,6 +26,7 @@ public class NewCityDialog extends JDialog
 	Stack<Micropolis> nextMaps = new Stack<Micropolis>();
 	OverlayMapView mapPane;
 	HashMap<Integer,JRadioButton> levelBtns = new HashMap<Integer,JRadioButton>();
+	HashMap<Integer,JRadioButton> levelBtns2 = new HashMap<Integer,JRadioButton>();
 
 	static final ResourceBundle strings = MainWindow.strings;
 
@@ -67,6 +68,23 @@ public class NewCityDialog extends JDialog
 				}});
 			levelBox.add(radioBtn);
 			levelBtns.put(lev, radioBtn);
+		}
+		levelBox.add(Box.createVerticalGlue());
+		setGameLevel(GameLevel.MIN_LEVEL);
+		
+		// ZWEITER SCHWIERIGKEITSGRAD
+		levelBox.add(Box.createVerticalGlue());
+		JRadioButton radioBtn2;
+		for (int lev = GameLevel.MIN_LEVEL; lev <= GameLevel.MAX_LEVEL; lev++)
+		{
+			final int x = lev;
+			radioBtn2 = new JRadioButton(strings.getString("menu.difficulty."+lev));
+			radioBtn2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					setZombieLevel(x);
+				}});
+			levelBox.add(radioBtn2);
+			levelBtns2.put(lev, radioBtn2);
 		}
 		levelBox.add(Box.createVerticalGlue());
 		setGameLevel(GameLevel.MIN_LEVEL);
@@ -230,4 +248,13 @@ public class NewCityDialog extends JDialog
 			levelBtns.get(lev).setSelected(lev == level);
 		}
 	}
+	
+	private void setZombieLevel(int level)
+	{
+		for (int lev : levelBtns2.keySet())
+		{
+			levelBtns2.get(lev).setSelected(lev == level);
+		}
+	}
+	
 }
