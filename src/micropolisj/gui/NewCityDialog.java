@@ -56,6 +56,8 @@ public class NewCityDialog extends JDialog
 		levelBox.setBorder(BorderFactory.createEmptyBorder(0,10,0,10));
 		p2.add(levelBox, BorderLayout.CENTER);
 
+		levelBox.add(new Label("Select Game Difficulty"));
+
 		levelBox.add(Box.createVerticalGlue());
 		JRadioButton radioBtn;
 		for (int lev = GameLevel.MIN_LEVEL; lev <= GameLevel.MAX_LEVEL; lev++)
@@ -72,13 +74,15 @@ public class NewCityDialog extends JDialog
 		levelBox.add(Box.createVerticalGlue());
 		setGameLevel(GameLevel.MIN_LEVEL);
 		
+		levelBox.add(new Label("Select Zombie Difficulty"));
+		
 		// ZWEITER SCHWIERIGKEITSGRAD
 		levelBox.add(Box.createVerticalGlue());
 		JRadioButton radioBtn2;
 		for (int lev = GameLevel.MIN_LEVEL; lev <= GameLevel.MAX_LEVEL; lev++)
 		{
 			final int x = lev;
-			radioBtn2 = new JRadioButton(strings.getString("menu.difficulty."+lev));
+			radioBtn2 = new JRadioButton(strings.getString("menu.zombiedifficulty."+lev));
 			radioBtn2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					setZombieLevel(x);
