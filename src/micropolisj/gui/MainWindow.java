@@ -1092,9 +1092,9 @@ public class MainWindow extends JFrame
 		if (timerEnabled) {
 			stopTimer();
 		}
-
+		
 		new NewCityDialog(this, !firstTime).setVisible(true);
-
+		
 		if (timerEnabled) {
 			startTimer();
 		}

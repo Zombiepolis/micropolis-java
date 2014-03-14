@@ -14,8 +14,10 @@ import micropolisj.gui.MainWindow;
 
 public class Main
 {
+     
 	static void createAndShowGUI()
-	{
+	{        
+
 		MainWindow win = new MainWindow();
 		win.setVisible(true);
 		win.doNewCity(true);
@@ -23,6 +25,7 @@ public class Main
 
 	public static void main(String [] args)
 	{
+		SplashscreenZombie splash = new SplashscreenZombie(5000);
 		SwingUtilities.invokeLater(new Runnable() {
 		public void run() {
 			createAndShowGUI();
