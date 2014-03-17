@@ -82,6 +82,9 @@ public class ToolStroke
 
 		case POLICE:
 			return applyZone(eff, POLICESTATION);
+			
+		case JAEGER:
+			return applyZone(eff, JAEGERHAUS);
 
 		case POWERPLANT:
 			return applyZone(eff, POWERPLANT);

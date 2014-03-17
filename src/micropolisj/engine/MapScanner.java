@@ -30,6 +30,13 @@ class MapScanner extends TileBehavior
 		this.traffic = new TrafficGen(city);
 	}
 
+	MapScanner(Micropolis city, B behavior)
+	{
+		super(city);
+		this.behavior = behavior;
+		this.traffic = new TrafficGen(city);
+	}
+
 	public static enum B
 	{
 		RESIDENTIAL,
@@ -43,7 +50,8 @@ class MapScanner extends TileBehavior
 		STADIUM_EMPTY,
 		STADIUM_FULL,
 		AIRPORT,
-		SEAPORT;
+		SEAPORT,
+		JAEGERHAUS;
 	}
 
 	@Override
@@ -73,6 +81,9 @@ class MapScanner extends TileBehavior
 			return;
 		case POLICESTATION:
 			doPoliceStation();
+			return;
+		case JAEGERHAUS:
+			doJaegerHaus();
 			return;
 		case STADIUM_EMPTY:
 			doStadiumEmpty();
@@ -237,6 +248,30 @@ class MapScanner extends TileBehavior
 		city.policeCount++;
 		if ((city.cityTime % 8) == 0) {
 			repairZone(POLICESTATION, 3);
+		}
+
+		int z;
+		if (powerOn) {
+			z = city.policeEffect;
+		} else {
+			z = city.policeEffect / 2;
+		}
+
+		traffic.mapX = xpos;
+		traffic.mapY = ypos;
+		if (!traffic.findPerimeterRoad()) {
+			z /= 2;
+		}
+
+		city.policeMap[ypos/8][xpos/8] += z;
+	}
+	
+	void doJaegerHaus()
+	{
+		boolean powerOn = checkZonePower();
+//		city.policeCount++;
+		if ((city.cityTime % 8) == 0) {
+			repairZone(JAEGERHAUS, 3);
 		}
 
 		int z;
