@@ -10,6 +10,8 @@ package micropolisj.engine;
 
 import static micropolisj.engine.TileConstants.*;
 
+import java.util.Random;
+
 /**
  * Implements a zombie (one of the Micropolis disasters).
  */
@@ -23,7 +25,7 @@ public class ZombieSprite extends Sprite
 	int origY;
 	int step;
 	boolean flag; //true if the zombie wants to return home
-
+	
 	//GODZILLA FRAMES
 	//   1...3 : northeast
 	//   4...6 : southeast
@@ -61,7 +63,10 @@ public class ZombieSprite extends Sprite
 			(ypos > city.getHeight() / 2 ? 1 : 4);
 
 		this.count = 1000;
-		CityLocation p = city.getLocationOfMaxPollution();
+		//CityLocation p = city.getLocationOfMaxPollution();
+		// random ziel festlegen
+		CityLocation p = new CityLocation((int)(Math.random()*(engine.map[0].length - 19))+10,(int)(Math.random()*(engine.map.length - 9))+5);
+		
 		this.destX = p.x * 16 + 8;
 		this.destY = p.y * 16 + 8;
 		this.flag = false;
