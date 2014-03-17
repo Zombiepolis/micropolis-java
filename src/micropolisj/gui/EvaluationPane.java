@@ -31,6 +31,7 @@ public class EvaluationPane extends JPanel
 	JLabel assessLbl;
 	JLabel cityClassLbl;
 	JLabel gameLevelLbl;
+	JLabel zombLevelLbl;
 	JLabel scoreLbl;
 	JLabel scoreDeltaLbl;
 
@@ -221,6 +222,11 @@ public class EvaluationPane extends JPanel
 		me.add(new JLabel(gstrings.getString("stats-game-level")), c2);
 		gameLevelLbl = new JLabel();
 		me.add(gameLevelLbl, c3);
+		
+		c2.gridy = ++c3.gridy;
+		me.add(new JLabel(gstrings.getString("stats-zomb-level")), c2);
+		zombLevelLbl = new JLabel();
+		me.add(zombLevelLbl, c3);
 
 		c2.gridy = c3.gridy = 21;
 		me.add(new JLabel(gstrings.getString("city-score-current")), c2);
@@ -282,6 +288,7 @@ public class EvaluationPane extends JPanel
 		assessLbl.setText(formatFunds(engine.evaluation.cityAssValue));
 		cityClassLbl.setText(getCityClassName(engine.evaluation.cityClass));
 		gameLevelLbl.setText(getGameLevelName(engine.gameLevel));
+		zombLevelLbl.setText(getZombLevelName(engine.zombLevel));
 		scoreLbl.setText(nf.format(engine.evaluation.cityScore));
 		scoreDeltaLbl.setText(nf.format(engine.evaluation.deltaCityScore));
 	}
@@ -294,5 +301,10 @@ public class EvaluationPane extends JPanel
 	static String getGameLevelName(int gameLevel)
 	{
 		return cstrings.getString("level."+gameLevel);
+	}
+	
+	static String getZombLevelName(int zombLevel)
+	{
+		return cstrings.getString("zombs."+zombLevel);
 	}
 }

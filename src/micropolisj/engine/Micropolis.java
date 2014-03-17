@@ -101,6 +101,9 @@ public class Micropolis
 	public boolean noDisasters = false;
 
 	public int gameLevel;
+	
+	//Zombielevel
+	public int zombLevel;
 
 	boolean autoGo;
 
