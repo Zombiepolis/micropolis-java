@@ -2340,9 +2340,7 @@ public class Micropolis
 	}
 	
 	public void makeZombie() {
-		ZombieSprite zombie = (ZombieSprite) getSprite(SpriteKind.ZOM);
-		
-		for (int i = 0; i < 300; i++) {
+		/*for (int i = 0; i < 300; i++) {
 			int x = PRNG.nextInt(getWidth() - 19) + 10;
 			int y = PRNG.nextInt(getHeight() - 9) + 5;
 			int t = getTile(x, y);
@@ -2350,7 +2348,7 @@ public class Micropolis
 				makeZombieAt(x, y);
 				return;
 			}
-		}
+		}*/
 
 		// no "nice" location found, just start in center of map then
 		makeZombieAt(getWidth()/2, getHeight()/2);
