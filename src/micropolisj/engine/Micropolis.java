@@ -1931,8 +1931,9 @@ public class Micropolis
 		gameLevel = dis.readShort();
 		evaluation.cityClass = dis.readShort();  //[16]
 		evaluation.cityScore = dis.readShort();
+		zombLevel = dis.readShort(); // [19] Zombielevel
 
-		for (int i = 18; i < 50; i++)
+		for (int i = 19; i < 50; i++)
 		{
 			dis.readShort();
 		}
@@ -1968,6 +1969,7 @@ public class Micropolis
 		if (cityTime < 0) { cityTime = 0; }
 		if (cityTax < 0 || cityTax > 20) { cityTax = 7; }
 		if (gameLevel < 0 || gameLevel > 2) { gameLevel = 0; }
+		if (zombLevel < 0 || zombLevel > 2) { zombLevel = 0; }
 		if (evaluation.cityClass < 0 || evaluation.cityClass > 5) { evaluation.cityClass = 0; }
 		if (evaluation.cityScore < 1 || evaluation.cityScore > 999) { evaluation.cityScore = 500; }
 
@@ -2000,7 +2002,8 @@ public class Micropolis
 		out.writeShort(evaluation.cityClass);
 		out.writeShort(evaluation.cityScore);
 		//18
-		for (int i = 18; i < 50; i++) {
+		out.writeShort(zombLevel); //Zombielevel
+		for (int i = 19; i < 50; i++) {
 			out.writeShort(0);
 		}
 		//50
@@ -2706,6 +2709,15 @@ public class Micropolis
 		gameLevel = newLevel;
 		fireOptionsChanged();
 	}
+	
+	public void setZombLevel(int newLevel)
+	{
+		assert ZombLevel.isValid(newLevel);
+		
+		zombLevel = newLevel;
+		fireOptionsChanged();
+	}
+	
 
 	public void setFunds(int totalFunds)
 	{

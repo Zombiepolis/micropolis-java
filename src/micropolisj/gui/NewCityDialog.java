@@ -220,6 +220,7 @@ public class NewCityDialog extends JDialog
 	private void onPlayClicked()
 	{
 		engine.setGameLevel(getSelectedGameLevel());
+		engine.setZombLevel(getSelectedZombLevel());
 		engine.setFunds(GameLevel.getStartingFunds(engine.gameLevel));
 		startPlaying(engine, null);
 	}
@@ -243,6 +244,18 @@ public class NewCityDialog extends JDialog
 			}
 		}
 		return GameLevel.MIN_LEVEL;
+	}
+	
+	private int getSelectedZombLevel()
+	{
+		for (int lev :levelBtns2.keySet())
+		{
+			if (levelBtns2.get(lev).isSelected())
+			{
+				return lev;
+			}
+		}
+		return ZombLevel.MIN_LEVEL;
 	}
 
 	private void setGameLevel(int level)
