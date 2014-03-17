@@ -2338,6 +2338,26 @@ public class Micropolis
 		assert !hasSprite(SpriteKind.GOD);
 		sprites.add(new MonsterSprite(this, xpos, ypos));
 	}
+	
+	public void makeZombie() {
+		/*for (int i = 0; i < 300; i++) {
+			int x = PRNG.nextInt(getWidth() - 19) + 10;
+			int y = PRNG.nextInt(getHeight() - 9) + 5;
+			int t = getTile(x, y);
+			if (t == RIVER) {
+				makeZombieAt(x, y);
+				return;
+			}
+		}*/
+
+		// no "nice" location found, just start in center of map then
+		makeZombieAt(getWidth()/2, getHeight()/2);
+	}
+	
+	void makeZombieAt(int xpos, int ypos) {
+		assert !hasSprite(SpriteKind.ZOM);
+		sprites.add(new ZombieSprite(this, xpos, ypos));		
+	}
 
 	public void makeTornado()
 	{
