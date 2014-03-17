@@ -30,13 +30,6 @@ class MapScanner extends TileBehavior
 		this.traffic = new TrafficGen(city);
 	}
 
-	MapScanner(Micropolis city, B behavior)
-	{
-		super(city);
-		this.behavior = behavior;
-		this.traffic = new TrafficGen(city);
-	}
-
 	public static enum B
 	{
 		RESIDENTIAL,
