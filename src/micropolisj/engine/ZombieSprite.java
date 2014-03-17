@@ -178,7 +178,8 @@ public class ZombieSprite extends Sprite
 				(s.kind == SpriteKind.AIR ||
 				 s.kind == SpriteKind.COP ||
 				 s.kind == SpriteKind.SHI ||
-				 s.kind == SpriteKind.TRA)
+				 s.kind == SpriteKind.TRA ||
+				 s.kind == SpriteKind.GOD)
 				) {
 				s.explodeSprite();
 			}
