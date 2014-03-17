@@ -656,6 +656,17 @@ public class MainWindow extends JFrame
 			}
 			}));
 		disastersMenu.add(menuItem);
+		
+		menuItem = new JMenuItem(strings.getString("menu.disasters.ZOMBIE"));
+		setupKeys(menuItem, "menu.disasters.ZOMBIE");
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
+			public void actionPerformed(ActionEvent ev)
+			{
+				onInvokeDisasterClicked(Disaster.ZOMBIE);
+			}
+			}));
+		disastersMenu.add(menuItem);
 
 		JMenu priorityMenu = new JMenu(strings.getString("menu.speed"));
 		setupKeys(priorityMenu, "menu.speed");
@@ -1542,6 +1553,9 @@ public class MainWindow extends JFrame
 			break;
 		case EARTHQUAKE:
 			getEngine().makeEarthquake();
+			break;
+		case ZOMBIE:
+			getEngine().makeZombie();
 			break;
 		default:
 			assert false; //unknown disaster
