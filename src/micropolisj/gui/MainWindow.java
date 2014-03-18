@@ -1610,6 +1610,10 @@ public class MainWindow extends JFrame
 		{
 			difficultyMenuItems.get(i).setSelected(getEngine().gameLevel == i);
 		}
+		for (int i = ZombLevel.MIN_LEVEL; i <= ZombLevel.MAX_LEVEL; i++)
+		{
+			difficultyMenuItems.get(i).setSelected(getEngine().zombLevel == i);
+		}
 	}
 
 	//implements Micropolis.Listener
