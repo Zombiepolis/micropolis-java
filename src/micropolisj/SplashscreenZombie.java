@@ -30,5 +30,6 @@ class SplashscreenZombie extends JWindow {
    } catch (Exception e) {
    }
    setVisible(false);
+   dispose();   
  }
 }
