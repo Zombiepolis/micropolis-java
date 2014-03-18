@@ -13,7 +13,6 @@ problem.TAXES = TAXES
 problem.TRAFFIC = TRAFFIC
 problem.UNEMPLOYMENT = UNEMPLOYMENT
 problem.FIRE = FIRES
-problem.ZOMBIE = ZOMBIES
 
 class.0 = VILLAGE
 class.1 = TOWN

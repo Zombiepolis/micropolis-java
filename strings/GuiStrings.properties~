@@ -24,7 +24,7 @@ main.tools_caption = Tools
 main.about_caption = About Zombiepolis
 main.version_string = Version {0} (Java %java.version%, %java.vendor%)
 main.caption_unnamed_city = Zombiepolis
-main.caption_named_city = {0} - Zombiepolis
+main.caption_named_city = {0} - ZombiepolisJ
 main.about_text = <html>\
 	<p>Copyright 2013 Jason Long<br>\
 	Portions Copyright 1989-2007 Electronic Arts Inc.</p>\
@@ -83,7 +83,9 @@ menu.overlays.FIRE_OVERLAY = Fire Coverage
 menu.overlays.FIRE_OVERLAY.key = F
 menu.overlays.POLICE_OVERLAY = Police Coverage
 menu.overlays.POLICE_OVERLAY.key = O
-menu.overlays.HUNTER_OVERLAY= Zombiehunter Coverage
+--menu.overlays.JAEGER_OVERLAY=Polizei Pr\u00E4senz
+
+
 
 menu.game = Game
 menu.game.key = G
@@ -223,10 +225,10 @@ tool.POLICE.name               = POLICE
 tool.POLICE.icon               = /icpol.png
 tool.POLICE.selected_icon      = /icpolhi.png
 tool.POLICE.tip                = Build Police Station
-tool.HUNTER.name               = ZOMBIEHUNTER
-tool.HUNTER.icon               = /icpol.png
-tool.HUNTER.selected_icon      = /icpolhi.png
-tool.HUNTER.tip                = Build Zombiehunter Station
+tool.JAEGER.name               = ZOMBIEHUNTER
+tool.JAEGER.icon               = /icpol.png
+tool.JAEGER.selected_icon      = /icpolhi.png
+tool.JAEGER.tip                = Build Zombiehunter Station
 tool.POWERPLANT.name           = POWERPLANT
 tool.POWERPLANT.icon           = /iccoal.png
 tool.POWERPLANT.selected_icon  = /iccoalhi.png
@@ -262,7 +264,7 @@ tool.COMMERCIAL.border         = #0000ff
 tool.INDUSTRIAL.border         = #ffff00
 tool.FIRE.border               = #ff0000
 tool.POLICE.border             = #0000ff
-tool.HUNTER.border             = #00ff00
+tool.JAEGER.border             = #00ff00
 tool.STADIUM.border            = #00ff00
 tool.PARK.border               = #bf7900
 tool.SEAPORT.border            = #0000ff
@@ -280,7 +282,7 @@ tool.COMMERCIAL.bgcolor        = rgba(0,0,255,0.375)
 tool.INDUSTRIAL.bgcolor        = rgba(255,255,0,0.375)
 tool.FIRE.bgcolor              = rgba(0,255,0,0.375)
 tool.POLICE.bgcolor            = rgba(0,255,0,0.375)
-tool.HUNTER.bgcolor            = rgba(0,255,0,0.375)
+tool.JAEGER.bgcolor            = rgba(0,255,0,0.375)
 tool.POWERPLANT.bgcolor        = rgba(93,93,93,0.375)
 tool.NUCLEAR.bgcolor           = rgba(93,93,93,0.375)
 tool.STADIUM.bgcolor           = rgba(93,93,93,0.375)
@@ -355,7 +357,6 @@ legend_image.POLLUTE_OVERLAY = /legendmm.png
 legend_image.TRAFFIC_OVERLAY = /legendmm.png
 legend_image.FIRE_OVERLAY = /legendmm.png
 legend_image.POLICE_OVERLAY = /legendmm.png
-legend_image.HUNTER_OVERLAY = /legendmm.png
 
 !
 ! Budget Dialog box, accessable through Windows -> Budget
