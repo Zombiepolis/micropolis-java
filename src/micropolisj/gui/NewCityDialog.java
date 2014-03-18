@@ -82,7 +82,7 @@ public class NewCityDialog extends JDialog
 		for (int lev2 = ZombLevel.MIN_LEVEL; lev2 <= ZombLevel.MAX_LEVEL; lev2++)
 		{
 			final int y = lev2;
-			radioBtn2 = new JRadioButton(strings.getString("menu.zombiedifficulty."+lev2));
+			radioBtn2 = new JRadioButton(strings.getString("menu.zombieculty."+lev2));
 			radioBtn2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					setZombieLevel(y);

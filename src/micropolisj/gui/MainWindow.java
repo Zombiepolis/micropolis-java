@@ -522,6 +522,26 @@ public class MainWindow extends JFrame
 			levelMenu.add(menuItem);
 			difficultyMenuItems.put(level, menuItem);
 		}
+		
+		JMenu zombieMenu = new JMenu(strings.getString("menu.zombieculty"));
+		setupKeys(zombieMenu, "menu.zombieculty");
+		optionsMenu.add(zombieMenu);
+
+		zombiecultyMenuItems = new HashMap<Integer,JMenuItem>();
+		for (int j = ZombLevel.MIN_LEVEL; j <= ZombLevel.MAX_LEVEL; j++)
+		{
+			final int zlevel = j;
+			menuItem = new JRadioButtonMenuItem(strings.getString("menu.zombieculty."+zlevel));
+			setupKeys(menuItem, "menu.zombieculty."+zlevel);
+			menuItem.addActionListener(wrapActionListener(
+				new ActionListener() {
+				public void actionPerformed(ActionEvent evt) {
+					onZombiecultyClicked(zlevel);
+				}
+			}));
+			zombieMenu.add(menuItem);
+			zombiecultyMenuItems.put(zlevel, menuItem);
+		}
 
 		autoBudgetMenuItem = new JCheckBoxMenuItem(strings.getString("menu.options.auto_budget"));
 		setupKeys(autoBudgetMenuItem, "menu.options.auto_budget");
@@ -808,6 +828,7 @@ public class MainWindow extends JFrame
 	JMenuItem soundsMenuItem;
 	Map<Speed,JMenuItem> priorityMenuItems;
 	Map<Integer,JMenuItem> difficultyMenuItems;
+	Map<Integer,JMenuItem> zombiecultyMenuItems;
 
 	private void onAutoBudgetClicked()
 	{
@@ -1525,6 +1546,11 @@ public class MainWindow extends JFrame
 	{
 		getEngine().setGameLevel(newDifficulty);
 	}
+	
+	private void onZombiecultyClicked(int newZombieculty)
+	{
+		getEngine().setZombLevel(newZombieculty);
+	}
 
 	private void onPriorityClicked(Speed newSpeed)
 	{
@@ -1612,7 +1638,7 @@ public class MainWindow extends JFrame
 		}
 		for (int i = ZombLevel.MIN_LEVEL; i <= ZombLevel.MAX_LEVEL; i++)
 		{
-			difficultyMenuItems.get(i).setSelected(getEngine().zombLevel == i);
+			zombiecultyMenuItems.get(i).setSelected(getEngine().zombLevel == i);
 		}
 	}
 
