@@ -76,7 +76,7 @@ class MapScanner extends TileBehavior
 			doPoliceStation();
 			return;
 		case HUNTER:
-			doJaegerHaus();
+			doHunter();
 			return;
 		case STADIUM_EMPTY:
 			doStadiumEmpty();
@@ -259,28 +259,9 @@ class MapScanner extends TileBehavior
 		city.policeMap[ypos/8][xpos/8] += z;
 	}
 	
-	void doJaegerHaus()
+	void doHunter()
 	{
-		boolean powerOn = checkZonePower();
-//		city.policeCount++;
-		if ((city.cityTime % 8) == 0) {
-			repairZone(HUNTER, 3);
-		}
-
-		int z;
-		if (powerOn) {
-			z = city.policeEffect;
-		} else {
-			z = city.policeEffect / 2;
-		}
-
-		traffic.mapX = xpos;
-		traffic.mapY = ypos;
-		if (!traffic.findPerimeterRoad()) {
-			z /= 2;
-		}
-
-		city.policeMap[ypos/8][xpos/8] += z;
+		// do whatevs
 	}
 
 	void doStadiumEmpty()

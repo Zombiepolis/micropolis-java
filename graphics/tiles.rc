@@ -1009,3 +1009,13 @@
 957   misc_animation@0,2080
 958   misc_animation@0,2096
 959   misc_animation@0,2112
+# BEGIN HUNTER BUILDING #
+960   hunter@0,0             (conducts)
+961   hunter@16,0            (conducts)
+962   hunter@32,0            (conducts)
+963   hunter@0,16            (conducts)
+964   hunter@16,16     (zone)(conducts)(building=3x3)(behavior=HUNTER)(description=#228)
+965   hunter@32,16           (conducts)
+966   hunter@0,32            (conducts)
+967   hunter@16,32           (conducts)
+968   hunter@32,32           (conducts)
