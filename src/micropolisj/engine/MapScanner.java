@@ -261,7 +261,6 @@ class MapScanner extends TileBehavior
 	
 	void doHunter()
 	{
-		boolean powerOn = checkZonePower();
 		// do whatevs
 		boolean powerOn = checkZonePower();
 		
