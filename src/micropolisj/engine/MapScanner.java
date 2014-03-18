@@ -262,6 +262,11 @@ class MapScanner extends TileBehavior
 	void doHunter()
 	{
 		// do whatevs
+		boolean powerOn = checkZonePower();
+		
+		if (powerOn) {
+		city.generateHunter(xpos, ypos);
+		}
 	}
 
 	void doStadiumEmpty()

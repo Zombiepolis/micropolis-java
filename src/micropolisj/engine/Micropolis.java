@@ -1557,6 +1557,12 @@ public class Micropolis
 		}
 	}
 
+	void generateHunter(int xpos, int ypos)
+	{
+		if (!hasSprite(SpriteKind.HUN)) {
+			sprites.add(new HunterSprite(this, xpos, ypos));
+		}
+	}
 	void generatePlane(int xpos, int ypos)
 	{
 		if (!hasSprite(SpriteKind.AIR)) {
