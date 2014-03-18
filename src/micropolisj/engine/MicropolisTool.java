@@ -32,7 +32,7 @@ public enum MicropolisTool
 	NUCLEAR(4, 5000),
 	AIRPORT(6, 10000),
 	QUERY(1, 0),
-	JAEGER(3, 500);
+	HUNTER(3, 500);
 	
 	int size;
 	int cost;

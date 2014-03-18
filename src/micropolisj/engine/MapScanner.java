@@ -44,7 +44,7 @@ class MapScanner extends TileBehavior
 		STADIUM_FULL,
 		AIRPORT,
 		SEAPORT,
-		JAEGERHAUS;
+		HUNTER;
 	}
 
 	@Override
@@ -75,7 +75,7 @@ class MapScanner extends TileBehavior
 		case POLICESTATION:
 			doPoliceStation();
 			return;
-		case JAEGERHAUS:
+		case HUNTER:
 			doJaegerHaus();
 			return;
 		case STADIUM_EMPTY:
@@ -264,7 +264,7 @@ class MapScanner extends TileBehavior
 		boolean powerOn = checkZonePower();
 //		city.policeCount++;
 		if ((city.cityTime % 8) == 0) {
-			repairZone(JAEGERHAUS, 3);
+			repairZone(HUNTER, 3);
 		}
 
 		int z;
