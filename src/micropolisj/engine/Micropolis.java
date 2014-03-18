@@ -1931,7 +1931,7 @@ public class Micropolis
 		gameLevel = dis.readShort();
 		evaluation.cityClass = dis.readShort();  //[16]
 		evaluation.cityScore = dis.readShort();
-		zombLevel = dis.readShort(); // [19] Zombielevel
+		zombLevel = dis.readShort(); // [18] Zombielevel
 
 		for (int i = 19; i < 50; i++)
 		{

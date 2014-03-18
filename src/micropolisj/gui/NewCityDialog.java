@@ -79,19 +79,19 @@ public class NewCityDialog extends JDialog
 		// ZWEITER SCHWIERIGKEITSGRAD
 		levelBox.add(Box.createVerticalGlue());
 		JRadioButton radioBtn2;
-		for (int lev = GameLevel.MIN_LEVEL; lev <= GameLevel.MAX_LEVEL; lev++)
+		for (int lev2 = ZombLevel.MIN_LEVEL; lev2 <= ZombLevel.MAX_LEVEL; lev2++)
 		{
-			final int x = lev;
-			radioBtn2 = new JRadioButton(strings.getString("menu.zombiedifficulty."+lev));
+			final int y = lev2;
+			radioBtn2 = new JRadioButton(strings.getString("menu.zombieculty."+lev2));
 			radioBtn2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
-					setZombieLevel(x);
+					setZombieLevel(y);
 				}});
 			levelBox.add(radioBtn2);
-			levelBtns2.put(lev, radioBtn2);
+			levelBtns2.put(lev2, radioBtn2);
 		}
 		levelBox.add(Box.createVerticalGlue());
-		setGameLevel(GameLevel.MIN_LEVEL);
+		setZombieLevel(ZombLevel.MIN_LEVEL);
 
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
