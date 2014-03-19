@@ -10,6 +10,8 @@ package micropolisj.engine;
 
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import static micropolisj.engine.TileConstants.*;
 import static micropolisj.engine.TrafficGen.ZoneType;
 
@@ -261,11 +263,19 @@ class MapScanner extends TileBehavior
 	
 	void doHunter()
 	{
-		// do whatevs
+		//hunter erzeugen, wenn es noch keinen zu diesem Haus gibt
 		boolean powerOn = checkZonePower();
 		
 		if (powerOn) {
-		city.generateHunter(xpos, ypos);
+			ArrayList<Sprite> hunter_sprites = city.getAllSprites(SpriteKind.HUN);
+			boolean exists=false;
+			for(Sprite s : hunter_sprites) {
+				HunterSprite ss=(HunterSprite)s;
+				if(ss.origX == xpos*16+8 && ss.origY == ypos*16+8) {
+					exists=true;
+				}
+			}
+			if(!exists) city.generateHunter(xpos, ypos);
 		}
 	}
 
