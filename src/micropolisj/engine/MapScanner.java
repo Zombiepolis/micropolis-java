@@ -46,7 +46,8 @@ class MapScanner extends TileBehavior
 		STADIUM_FULL,
 		AIRPORT,
 		SEAPORT,
-		HUNTER;
+		HUNTER,
+		GRAVEYARD;
 	}
 
 	@Override
@@ -92,6 +93,8 @@ class MapScanner extends TileBehavior
 		case SEAPORT:
 			doSeaport();
 			return;
+		case GRAVEYARD:
+			doGraveyard();
 		default:
 			assert false;
 		}
@@ -337,6 +340,10 @@ class MapScanner extends TileBehavior
 		if (powerOn && !city.hasSprite(SpriteKind.SHI)) {
 			city.generateShip();
 		}
+	}
+	
+	void doGraveyard() {
+		// nix erstmal
 	}
 
 	/**

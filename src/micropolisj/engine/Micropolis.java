@@ -1459,6 +1459,7 @@ public class Micropolis
 		bb.put("AIRPORT", new MapScanner(this, MapScanner.B.AIRPORT));
 		bb.put("SEAPORT", new MapScanner(this, MapScanner.B.SEAPORT));
 		bb.put("HUNTER", new MapScanner(this, MapScanner.B.HUNTER));
+		bb.put("GRAVEYARD", new MapScanner(this, MapScanner.B.GRAVEYARD));
 
 		this.tileBehaviors = bb;
 	}
