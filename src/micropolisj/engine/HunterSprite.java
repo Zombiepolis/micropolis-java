@@ -75,5 +75,15 @@ public class HunterSprite extends Sprite {
 		}
 		x += CDx[z];
 		y += CDy[z];
+		
+		for (Sprite s : city.allSprites())
+		{
+			if (checkSpriteCollision(s) &&
+				(s.kind == SpriteKind.ZOM)
+				) {
+				s.explodeSprite();
+			}
+		}
+		
 	}
 }
