@@ -15,7 +15,7 @@ public class HunterSprite extends Sprite {
 	public HunterSprite(Micropolis engine, int xpos, int ypos)
 	{
 		super(engine, SpriteKind.HUN);
-		this.x = xpos * 16 + 8;
+		this.x = xpos * 16 + 8; //dies ändern
 		this.y = ypos * 16 + 8;
 		this.width = 32;
 		this.height = 32;
@@ -53,11 +53,6 @@ public class HunterSprite extends Sprite {
 				this.destY = origY;
 			}
 
-			if (getDis(x, y, origX, origY) < 30) {
-				// made it back to airport, go ahead and land.
-				this.frame = 0;
-				return;
-			}
 		}
 
 		int z = this.frame;
