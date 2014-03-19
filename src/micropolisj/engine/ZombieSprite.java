@@ -93,25 +93,6 @@ public class ZombieSprite extends Sprite
 			if (z == 0) step = 1;
 			z += step;
 
-			if (getDis(x, y, destX, destY) < 60) {
-
-				// reached destination
-
-				if (!flag) {
-					// destination was the pollution center;
-					// now head for home
-					flag = true;
-					destX = origX;
-					destY = origY;
-				}
-				else {
-					// destination was origX, origY;
-					// hide the sprite
-					this.frame = 0;
-					return;
-				}
-			}
-
 			int c = getDir(x, y, destX, destY);
 			c = (c - 1) / 2;   //convert to one of four basic headings
 			assert c >= 0 && c < 4;
@@ -166,10 +147,9 @@ public class ZombieSprite extends Sprite
 		}
 
 		int c = getChar(x, y);
-		if (c == -1 ||
-			(c == RIVER && this.count != 0 && false)
-			) {
-			this.frame = 0; //kill zilla
+		if (c == -1 || (c == RIVER && this.count != 0 && false)) {
+			this.frame = 0; //kill zombie
+			city.makeZombie(); //erstelle neuen zombie
 		}
 
 		for (Sprite s : city.allSprites())
