@@ -25,7 +25,7 @@ public class Main
 
 	public static void main(String [] args)
 	{
-		SplashscreenZombie splash = new SplashscreenZombie(5000);
+		SplashscreenZombie splash = new SplashscreenZombie(500);
 		SwingUtilities.invokeLater(new Runnable() {
 		public void run() {
 			createAndShowGUI();

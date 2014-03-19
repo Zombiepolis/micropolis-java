@@ -1537,6 +1537,17 @@ public class Micropolis
 		}
 		return null;
 	}
+	
+	ArrayList<Sprite> getAllSprites(SpriteKind kind) {
+		if(kind==null) return sprites;
+		ArrayList<Sprite> sprites_output = new ArrayList<Sprite>();
+		for(Sprite s : sprites) {
+			if (s.kind == kind) {
+				sprites_output.add(s);
+			}
+		}
+		return sprites_output;
+	}
 
 	boolean hasSprite(SpriteKind kind)
 	{
@@ -1559,9 +1570,7 @@ public class Micropolis
 
 	void generateHunter(int xpos, int ypos)
 	{
-		if (!hasSprite(SpriteKind.HUN)) {
-			sprites.add(new HunterSprite(this, xpos, ypos));
-		}
+		sprites.add(new HunterSprite(this, xpos, ypos));
 	}
 	void generatePlane(int xpos, int ypos)
 	{
