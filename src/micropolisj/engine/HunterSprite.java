@@ -67,20 +67,6 @@ public class HunterSprite extends Sprite {
 			}
 		}
 
-		if (city.acycle % SOUND_FREQ == 0) {
-			// send report, if hovering over high traffic area
-			int xpos = this.x / 16;
-			int ypos = this.y / 16;
-
-			if (city.getTrafficDensity(xpos, ypos) > 170 &&
-				city.PRNG.nextInt(8) == 0)
-			{
-				city.sendMessageAt(MicropolisMessage.HEAVY_TRAFFIC_REPORT,
-					xpos, ypos);
-				city.makeSound(xpos, ypos, Sound.HEAVYTRAFFIC);
-			}
-		}
-
 		int z = this.frame;
 		if (city.acycle % 3 == 0) {
 			int d = getDir(x, y, destX, destY);
