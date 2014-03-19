@@ -27,7 +27,7 @@ public class HunterSprite extends Sprite {
 
 		this.origX = x;
 		this.origY = y;
-		this.count = 500; //war 1500
+		this.count = 20; //war 1500
 		this.frame = 5;
 	}
 
