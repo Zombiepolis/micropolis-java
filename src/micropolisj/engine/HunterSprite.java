@@ -35,6 +35,10 @@ public class HunterSprite extends Sprite {
 		this.frame = 5;
 	}
 
+	public int getRadius(){
+		return radius;
+	}
+	
 	@Override
 	public void moveImpl()
 	{

@@ -2447,6 +2447,11 @@ public class Micropolis
 		assert dim.height >= 3;
 
 		int zoneBase = (zoneTile&LOMASK) - 1 - dim.width;
+		
+		//kills zombie hunter, if this tile had a zombie hunter base on it
+		if (isHunterHouse(zoneTile)){
+			//TODO: kill zombie hunter
+		}
 
 		// this will take care of stopping smoke animations
 		shutdownZone(xpos, ypos, dim);

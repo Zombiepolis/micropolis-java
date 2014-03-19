@@ -339,6 +339,12 @@ public class TileConstants
 			(tile <= WOODS_HIGH));
 	}
 
+	public static boolean isHunterHouse(int tile){
+		assert (tile & LOMASK) == tile;
+		
+		return (tile == HUNTER);
+	}
+	
 	//used by makeEarthquake
 	public static boolean isVulnerable(int tile)
 	{
