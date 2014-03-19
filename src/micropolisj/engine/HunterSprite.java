@@ -79,7 +79,7 @@ public class HunterSprite extends Sprite {
 		
 
 		int z = this.frame;
-		if (city.acycle % 10 == 0) {
+		if (city.acycle % 3 == 0) {
 			int d = getDir(x, y, destX, destY);
 			z = turnTo(z, d);
 			this.frame = z;
@@ -92,7 +92,8 @@ public class HunterSprite extends Sprite {
 			if (checkSpriteCollision(s) &&
 				(s.kind == SpriteKind.ZOM)
 				) {
-				s.explodeSprite();
+				s.frame = 0;
+				city.sprites.add(new ZombieExplosionSprite(city, s.x, s.y));
 			}
 		}
 		
