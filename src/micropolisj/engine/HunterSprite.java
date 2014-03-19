@@ -27,7 +27,7 @@ public class HunterSprite extends Sprite {
 
 		this.origX = x;
 		this.origY = y;
-		this.count = 1500;
+		this.count = 5; //war 1500
 		this.frame = 5;
 	}
 
@@ -40,19 +40,12 @@ public class HunterSprite extends Sprite {
 
 		if (this.count == 0) {
 
-			// attract copter to monster and tornado so it blows up more often
-			if (city.hasSprite(SpriteKind.GOD)) {
+			// attract hunter to zombies
+			if (city.hasSprite(SpriteKind.ZOM)) {
 
-				MonsterSprite monster = (MonsterSprite) city.getSprite(SpriteKind.GOD);
-				this.destX = monster.x;
-				this.destY = monster.y;
-
-			}
-			else if (city.hasSprite(SpriteKind.TOR)) {
-
-				TornadoSprite tornado = (TornadoSprite) city.getSprite(SpriteKind.TOR);
-				this.destX = tornado.x;
-				this.destY = tornado.y;
+				ZombieSprite zombie = (ZombieSprite) city.getSprite(SpriteKind.ZOM);
+				this.destX = zombie.x;
+				this.destY = zombie.y;
 
 			}
 			else {
