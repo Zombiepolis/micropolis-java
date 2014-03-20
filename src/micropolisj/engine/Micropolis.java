@@ -2389,8 +2389,13 @@ public class Micropolis
 		assert !hasSprite(SpriteKind.ZOM);
 		sprites.add(new ZombieSprite(this, xpos, ypos));
 		zombieCount++;
+<<<<<<< HEAD
 		if (zombieCount == 20) {
 			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, xpos,ypos);
+=======
+		if(zombieCount >= 20){
+			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, zombiespawn_x,zombiespawn_y);
+>>>>>>> 73bd429f994c15e1529aaf0a18dede0d0f0a3dcd
 		}
 	}
 
@@ -2461,7 +2466,7 @@ public class Micropolis
 		int zoneBase = (zoneTile&LOMASK) - 1 - dim.width;
 		
 		//kills zombie hunter, if this tile had a zombie hunter base on it: geht noch nicht
-		if (isHunterHouse(zoneTile)){
+		/*if (isHunterHouse(zoneTile)){
 			
 			ArrayList<Sprite> hunter_sprites = this.city.getAllSprites(SpriteKind.HUN);
 			
@@ -2473,7 +2478,7 @@ public class Micropolis
 				i++;
 			}
 			hunter.explodeSprite();
-		}
+		}*/
 
 		// this will take care of stopping smoke animations
 		shutdownZone(xpos, ypos, dim);
