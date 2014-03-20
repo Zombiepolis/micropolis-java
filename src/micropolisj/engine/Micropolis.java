@@ -2389,13 +2389,8 @@ public class Micropolis
 		assert !hasSprite(SpriteKind.ZOM);
 		sprites.add(new ZombieSprite(this, xpos, ypos));
 		zombieCount++;
-<<<<<<< HEAD
 		if (zombieCount == 20) {
 			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, xpos,ypos);
-=======
-		if(zombieCount >= 20){
-			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, zombiespawn_x,zombiespawn_y);
->>>>>>> 73bd429f994c15e1529aaf0a18dede0d0f0a3dcd
 		}
 	}
 
