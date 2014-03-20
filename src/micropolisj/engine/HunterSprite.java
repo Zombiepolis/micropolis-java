@@ -2,7 +2,6 @@ package micropolisj.engine;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 
 public class HunterSprite extends Sprite {
 
@@ -52,6 +51,18 @@ public class HunterSprite extends Sprite {
 	@Override
 	public void moveImpl()
 	{
+		
+		if(this.city.getTile((origX-8)/16, (origY-8)/16) != micropolisj.engine.TileConstants.HUNTER){
+	        this.frame = 0;
+	        return;
+	    }
+
+	    if (!city.hasPower((origX-8)/16, (origY-8)/16)){
+	        this.frame = 0;
+	        return;
+	    }
+	    
+	    
 		if (this.count > 0) {
 			this.count--;
 		}
