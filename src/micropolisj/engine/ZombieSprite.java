@@ -12,6 +12,8 @@ import static micropolisj.engine.TileConstants.*;
 
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+
 /**
  * Implements a zombie (one of the Micropolis disasters).
  */
@@ -153,9 +155,9 @@ public class ZombieSprite extends Sprite
 
 		int c = getChar(x, y);
 		if (c == -1 || (c == RIVER && this.count != 0 && false)) {
-			this.frame = 0; //kill zombie
-			city.zombieCount--;
-			city.makeZombie(); //erstelle neuen zombie
+			//zombie killen und neuen erstellen
+			city.makeZombie();
+			kill();
 		}
 
 		for (Sprite s : city.allSprites())
@@ -172,5 +174,12 @@ public class ZombieSprite extends Sprite
 		}
 
 		destroyTile(x / 16, y / 16);
+	}
+	
+	public void kill() {
+		this.frame=0;
+		city.zombieCount--;
+		city.sprites.remove(city.getCertainSprite(SpriteKind.ZOM, x, y));
+		System.gc();
 	}
 }

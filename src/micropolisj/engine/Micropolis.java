@@ -1562,6 +1562,15 @@ public class Micropolis
 	{
 		return getSprite(kind) != null;
 	}
+	
+	Sprite getCertainSprite(SpriteKind kind, int xpos, int ypos) {
+		for(Sprite s : sprites) {
+			if(s.kind==kind && s.x==(xpos) && s.y==(ypos)) {
+				return s;
+			}
+		}
+		return null;
+	}
 
 	void makeShipAt(int xpos, int ypos, int edge)
 	{
@@ -2400,7 +2409,7 @@ public class Micropolis
 	
 	void makeZombieAt(int xpos, int ypos) {
 		assert !hasSprite(SpriteKind.ZOM);
-		if(zombieCount < 100) {
+		if(zombieCount < 30) {
 			sprites.add(new ZombieSprite(this, xpos, ypos));
 			zombieCount++;
 			if (zombieCount == 20) {
