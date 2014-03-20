@@ -23,7 +23,7 @@ public class Micropolis
 	static final Random DEFAULT_PRNG = new Random();
 
 	Random PRNG;
-	Micropolis city; //neu addiert
+	//Micropolis city;
 
 	// full size arrays
 	char [][] map;
@@ -2762,6 +2762,10 @@ public class Micropolis
 		
 		zombLevel = newLevel;
 		fireOptionsChanged();
+	}
+	
+	public int getZombLevel(){
+		return zombLevel;
 	}
 	
 
