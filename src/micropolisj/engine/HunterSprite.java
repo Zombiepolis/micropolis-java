@@ -10,7 +10,7 @@ public class HunterSprite extends Sprite {
 	int origX;
 	int origY;
 
-	int radius = 500;
+	int radius = 350;
 	
 	static int [] CDx = { 0,  0,  3,  5,  3,  0, -3, -5, -3 };
 	static int [] CDy = { 0, -5, -3,  0,  3,  5,  3,  0, -3 };
