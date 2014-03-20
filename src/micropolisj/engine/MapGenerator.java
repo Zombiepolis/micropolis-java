@@ -116,6 +116,9 @@ public class MapGenerator
 		{
 			doTrees();
 		}
+		
+		setCemetery();
+		
 	}
 
 	private void makeIsland()
@@ -123,6 +126,7 @@ public class MapGenerator
 		makeNakedIsland();
 		smoothRiver();
 		doTrees();
+		setCemetery();
 	}
 
 	private int erand(int limit)
@@ -539,6 +543,104 @@ public class MapGenerator
 						map[mapY][mapX] = temp;
 					}
 				}
+			}
+		}
+	}
+	
+	static final char [][] CMatrix = new char[][] {
+			{ 969, 970, 971, 972, 973, 974 },
+			{ 975, 976, 977, 978, 979, 980 },
+			{ 981, 982, 983, 984, 985, 986 },
+			{ 987, 988, 989, 990, 991, 992 },
+			{ 993, 994, 995, 996, 997, 998 },
+			{ 999, 1000, 1001, 1002, 1003, 1004 }
+			};
+	
+	private void setCemetery()
+	{
+		final int X_WORLD = getWidth();
+		final int Y_WORLD = getHeight();
+		
+		int x_centre = (int) Math.floor(X_WORLD/2);
+		int y_centre = (int) Math.floor(Y_WORLD/2);
+		
+		//x_centre += PRNG.nextInt(X_WORLD/10);
+		//y_centre += PRNG.nextInt(Y_WORLD/10);
+		
+		//in alle Richtungen vergleichen
+		
+		boolean setable;
+		int plusMinusX;
+		int plusMinusY;
+		
+		int x_tmp;
+		int y_tmp;
+		
+		do
+		{
+			setable = true;
+			do
+			{
+				plusMinusX = PRNG.nextInt(2);
+				if (plusMinusX == 0)
+				{
+					x_tmp = x_centre + PRNG.nextInt(X_WORLD/10);
+				} else {
+					x_tmp = x_centre - PRNG.nextInt(X_WORLD/10);
+				}
+			} while ( ( (5 >= x_tmp) || (x_tmp >= X_WORLD - 10) ) );
+			
+			x_centre = x_tmp;
+			
+			do
+			{
+				plusMinusY = PRNG.nextInt(2);
+				if (plusMinusY == 0)
+				{
+					y_tmp = y_centre + PRNG.nextInt(Y_WORLD/10);
+				} else {
+					y_tmp = y_centre - PRNG.nextInt(Y_WORLD/10);
+				}
+			} while ( ( (5 >= y_tmp) || (y_tmp >= Y_WORLD - 10) ) );
+			
+			y_centre = y_tmp;
+						
+			for (int x_comp = -1; x_comp < 5; x_comp++)
+			{
+				for (int y_comp = -1; y_comp < 5; y_comp++)
+				{
+					if ((x_centre + x_comp < 100) && (y_centre + y_comp < 100))
+					{
+						if ( ((map[x_centre + x_comp][y_centre + y_comp] & LOMASK) == RIVER) || ((map[x_centre + x_comp][y_centre + y_comp] & LOMASK) == REDGE) || ((map[x_centre + x_comp][y_centre + y_comp] & LOMASK) == CHANNEL) )
+							//  || ((map[x_centre +x_comp][y_centre +y_comp] & LOMASK) == RIVEDGE) || ((map[x_centre +x_comp][y_centre +y_comp] & LOMASK) == FIRSTRIVEDGE) || ((map[x_centre +x_comp][y_centre +y_comp] & LOMASK) == LASTRIVEDGE)
+						{
+							setable = false;
+						}
+					} else {
+						setable = false;
+					}
+				}
+			}
+		} while (setable == false);
+		
+		for (int x = -1; x < 5; x++)
+		{
+			for (int y = -1; y < 5; y++)
+			{
+				
+				int xloc = x_centre + x;
+				int yloc = y_centre + y;
+
+				if (!engine.testBounds(xloc, yloc))
+					return;
+
+				char tmp = CMatrix[y+1][x+1];
+				
+					tmp &= LOMASK;
+					
+				map[yloc][xloc] = tmp;
+				
+				
 			}
 		}
 	}

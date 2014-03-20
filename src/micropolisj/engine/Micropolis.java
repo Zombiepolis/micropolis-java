@@ -23,6 +23,7 @@ public class Micropolis
 	static final Random DEFAULT_PRNG = new Random();
 
 	Random PRNG;
+	Micropolis city; //neu addiert
 
 	// full size arrays
 	char [][] map;
@@ -2459,9 +2460,19 @@ public class Micropolis
 
 		int zoneBase = (zoneTile&LOMASK) - 1 - dim.width;
 		
-		//kills zombie hunter, if this tile had a zombie hunter base on it
+		//kills zombie hunter, if this tile had a zombie hunter base on it: geht noch nicht
 		if (isHunterHouse(zoneTile)){
-			//TODO: kill zombie hunter
+			
+			ArrayList<Sprite> hunter_sprites = this.city.getAllSprites(SpriteKind.HUN);
+			
+			int i = 0;
+			HunterSprite hunter = (HunterSprite) hunter_sprites.get(i);
+			
+			while ((!(hunter.getOrigX() == xpos && hunter.getOrigY() == ypos)) && i < hunter_sprites.size()){
+				hunter = (HunterSprite) hunter_sprites.get(i);
+				i++;
+			}
+			hunter.explodeSprite();
 		}
 
 		// this will take care of stopping smoke animations
