@@ -65,10 +65,15 @@ public class ZombieSprite extends Sprite
 			(ypos > city.getHeight() / 2 ? 1 : 4);
 
 		this.count = 1000;
-		//CityLocation p = city.getLocationOfMaxPollution();
-		// random ziel festlegen
-		CityLocation p = new CityLocation((int)(Math.random()*(engine.map[0].length - 19))+10,(int)(Math.random()*(engine.map.length - 9))+5);
 		
+		CityLocation p;
+		
+		if (city.getZombLevel() == 1){
+			p = new CityLocation((int)(Math.random()*(engine.map[0].length - 19))+10,(int)(Math.random()*(engine.map.length - 9))+5);
+		} else {
+			p = city.getLocationOfMaxPollution();
+		}
+			
 		this.destX = p.x * 16 + 8;
 		this.destY = p.y * 16 + 8;
 		this.flag = false;
