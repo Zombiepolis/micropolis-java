@@ -149,6 +149,7 @@ public class ZombieSprite extends Sprite
 		int c = getChar(x, y);
 		if (c == -1 || (c == RIVER && this.count != 0 && false)) {
 			this.frame = 0; //kill zombie
+			city.zombieCount--;
 			city.makeZombie(); //erstelle neuen zombie
 		}
 

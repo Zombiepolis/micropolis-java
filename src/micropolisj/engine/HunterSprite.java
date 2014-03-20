@@ -107,6 +107,7 @@ public class HunterSprite extends Sprite {
 				(s.kind == SpriteKind.ZOM)
 				) {
 				s.frame = 0;
+				city.zombieCount--;
 				city.sprites.add(new ZombieExplosionSprite(city, s.x, s.y));
 			}
 		}
