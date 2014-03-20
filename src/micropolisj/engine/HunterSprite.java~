@@ -21,7 +21,7 @@ public class HunterSprite extends Sprite {
 	public HunterSprite(Micropolis engine, int xpos, int ypos)
 	{
 		super(engine, SpriteKind.HUN);
-		this.x = xpos * 16 + 8; //dies aendern
+		this.x = xpos * 16 + 8; //dies ändern
 		this.y = ypos * 16 + 8;
 		this.width = 32;
 		this.height = 32;
