@@ -346,7 +346,10 @@ class MapScanner extends TileBehavior
 		city.zombiespawn_x=xpos;
 		city.zombiespawn_y=ypos;
 		// der zombie spawnt zufaellig auf einem der friedhofs-felder
-		city.makeZombieAt(xpos+(int)Math.round(((Math.random()*6)-1)),ypos+(int)Math.round(((Math.random()*6)-1)));
+		//grad 0 = keine zombies, grad 2 = jeder tick ein zombie, grad 1 = jeder zweite tick ein zombie
+		if(city.zombLevel==2 || (city.zombLevel==1 && city.cityTime % 2 == 0)) {
+			city.makeZombieAt(xpos+(int)Math.round(((Math.random()*6)-1)),ypos+(int)Math.round(((Math.random()*6)-1)));
+		}
 	}
 
 	/**
