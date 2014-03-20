@@ -1587,7 +1587,7 @@ public class MainWindow extends JFrame
 			getEngine().makeEarthquake();
 			break;
 		case ZOMBIE:
-			getEngine().makeZombie();
+			for(int a=0;a<10;a++) getEngine().makeZombie();
 			break;
 		default:
 			assert false; //unknown disaster
