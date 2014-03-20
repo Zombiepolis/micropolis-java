@@ -2387,10 +2387,12 @@ public class Micropolis
 	
 	void makeZombieAt(int xpos, int ypos) {
 		assert !hasSprite(SpriteKind.ZOM);
-		sprites.add(new ZombieSprite(this, xpos, ypos));
-		zombieCount++;
-		if (zombieCount == 20) {
-			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, xpos,ypos);
+		if(zombieCount < 100) {
+			sprites.add(new ZombieSprite(this, xpos, ypos));
+			zombieCount++;
+			if (zombieCount == 20) {
+				sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, xpos,ypos);
+			}
 		}
 	}
 
