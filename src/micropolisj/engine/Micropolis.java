@@ -2380,6 +2380,7 @@ public class Micropolis
 	}
 	
 	public void makeZombie() {
+		
 		/*for (int i = 0; i < 300; i++) {
 			int x = PRNG.nextInt(getWidth() - 19) + 10;
 			int y = PRNG.nextInt(getHeight() - 9) + 5;
@@ -2391,7 +2392,19 @@ public class Micropolis
 		}*/
 
 		// no "nice" location found, just start in center of map then
-		makeZombieAt(zombiespawn_x,zombiespawn_y);
+		
+		//get random x and y
+		int x = (int)(Math.random()*(map[0].length - 19))+1;
+		int y = (int)(Math.random()*(map.length - 9))+5;
+		int t = getTile(x, y);
+		while (t == RIVER){
+			x = (int)(Math.random()*(map[0].length - 19))+1;
+			y = (int)(Math.random()*(map.length - 9))+5;
+			t = getTile(x, y);
+		}
+		
+		makeZombieAt(x, y);
+		
 	}
 	
 	void makeZombieAt(int xpos, int ypos) {
