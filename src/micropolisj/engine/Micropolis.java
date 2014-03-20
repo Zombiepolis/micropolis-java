@@ -128,6 +128,7 @@ public class Micropolis
 	int nuclearCount;
 	int seaportCount;
 	int airportCount;
+	int zombieCount;
 
 	int totalPop;
 	int lastCityPop;
@@ -2381,6 +2382,10 @@ public class Micropolis
 
 		// no "nice" location found, just start in center of map then
 		makeZombieAt(zombiespawn_x,zombiespawn_y);
+		zombieCount++;
+		if(zombieCount >= 20){
+			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, zombiespawn_x,zombiespawn_y);
+		}
 	}
 	
 	void makeZombieAt(int xpos, int ypos) {

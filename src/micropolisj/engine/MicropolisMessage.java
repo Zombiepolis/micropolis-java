@@ -58,7 +58,7 @@ public enum MicropolisMessage
 	FLOOD_REPORT,
 	MELTDOWN_REPORT,        // 43            doMeltdown
 	RIOTING_REPORT,
-
+	ZOMBIE_INVASION,
 	// added by Jason
 	NO_NUCLEAR_PLANTS,
 	ZOMBIE_DEATH;
@@ -88,5 +88,6 @@ public enum MicropolisMessage
 	SHIPWRECK_REPORT.useNotificationPane = true;
 	COPTER_CRASH_REPORT.useNotificationPane = true;
 	PLANECRASH_REPORT.useNotificationPane = true;
+	ZOMBIE_INVASION.useNotificationPane = true;
 	}
 }
