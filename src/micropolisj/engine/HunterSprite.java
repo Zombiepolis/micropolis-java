@@ -39,6 +39,14 @@ public class HunterSprite extends Sprite {
 		return radius;
 	}
 	
+	public int getOrigX(){
+		return this.origX;
+	}
+	
+	public int getOrigY(){
+		return this.origY;
+	}
+	
 	@Override
 	public void moveImpl()
 	{
@@ -100,6 +108,8 @@ public class HunterSprite extends Sprite {
 				city.sprites.add(new ZombieExplosionSprite(city, s.x, s.y));
 			}
 		}
+		
+		
 		
 	}
 }
