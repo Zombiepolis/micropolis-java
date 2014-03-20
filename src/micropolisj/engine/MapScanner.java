@@ -343,7 +343,10 @@ class MapScanner extends TileBehavior
 	}
 	
 	void doGraveyard() {
-		// nix erstmal
+		city.zombiespawn_x=xpos;
+		city.zombiespawn_y=ypos;
+		// der zombie spawnt zufaellig auf einem der friedhofs-felder
+		city.makeZombieAt(xpos+(int)Math.round(((Math.random()*6)-1)),ypos+(int)Math.round(((Math.random()*6)-1)));
 	}
 
 	/**

@@ -201,6 +201,9 @@ public class Micropolis
 	static final int VALVERATE = 2;
 	public static final int CENSUSRATE = 4;
 	static final int TAXFREQ = 48;
+	
+	public int zombiespawn_x;
+	public int zombiespawn_y;
 
 	public void spend(int amount)
 	{
@@ -252,6 +255,9 @@ public class Micropolis
 
 		centerMassX = hX;
 		centerMassY = hY;
+		
+		zombiespawn_x=width/2;
+		zombiespawn_y=height/2;
 	}
 
 	void fireCensusChanged()
@@ -2374,7 +2380,7 @@ public class Micropolis
 		}*/
 
 		// no "nice" location found, just start in center of map then
-		makeZombieAt(getWidth()/2, getHeight()/2);
+		makeZombieAt(zombiespawn_x,zombiespawn_y);
 	}
 	
 	void makeZombieAt(int xpos, int ypos) {
