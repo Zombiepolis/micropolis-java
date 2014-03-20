@@ -2383,15 +2383,15 @@ public class Micropolis
 
 		// no "nice" location found, just start in center of map then
 		makeZombieAt(zombiespawn_x,zombiespawn_y);
-		zombieCount++;
-		if(zombieCount >= 20){
-			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, zombiespawn_x,zombiespawn_y);
-		}
 	}
 	
 	void makeZombieAt(int xpos, int ypos) {
 		assert !hasSprite(SpriteKind.ZOM);
-		sprites.add(new ZombieSprite(this, xpos, ypos));		
+		sprites.add(new ZombieSprite(this, xpos, ypos));
+		zombieCount++;
+		if (zombieCount == 20) {
+			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, xpos,ypos);
+		}
 	}
 
 	public void makeTornado()
