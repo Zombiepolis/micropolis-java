@@ -68,10 +68,10 @@ public class ZombieSprite extends Sprite
 		
 		CityLocation p;
 		
-		if (city.getZombLevel() == 1){
+		if (city.getZombLevel() < 2 || true){ //wenn es noch kein pollution center gibt laufen die zombies doof in die linke obere ecke
 			p = new CityLocation((int)(Math.random()*(engine.map[0].length - 19))+10,(int)(Math.random()*(engine.map.length - 9))+5);
 		} else {
-			p = city.getLocationOfMaxPollution();
+			//p = city.getLocationOfMaxPollution();
 		}
 			
 		this.destX = p.x * 16 + 8;
