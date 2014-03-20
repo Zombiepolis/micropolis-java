@@ -2383,15 +2383,15 @@ public class Micropolis
 
 		// no "nice" location found, just start in center of map then
 		makeZombieAt(zombiespawn_x,zombiespawn_y);
-		zombieCount++;
-		if(zombieCount >= 20){
-			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, zombiespawn_x,zombiespawn_y);
-		}
 	}
 	
 	void makeZombieAt(int xpos, int ypos) {
 		assert !hasSprite(SpriteKind.ZOM);
-		sprites.add(new ZombieSprite(this, xpos, ypos));		
+		sprites.add(new ZombieSprite(this, xpos, ypos));
+		zombieCount++;
+		if(zombieCount >= 20){
+			sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, zombiespawn_x,zombiespawn_y);
+		}
 	}
 
 	public void makeTornado()
@@ -2461,7 +2461,7 @@ public class Micropolis
 		int zoneBase = (zoneTile&LOMASK) - 1 - dim.width;
 		
 		//kills zombie hunter, if this tile had a zombie hunter base on it: geht noch nicht
-		if (isHunterHouse(zoneTile)){
+		/*if (isHunterHouse(zoneTile)){
 			
 			ArrayList<Sprite> hunter_sprites = this.city.getAllSprites(SpriteKind.HUN);
 			
@@ -2473,7 +2473,7 @@ public class Micropolis
 				i++;
 			}
 			hunter.explodeSprite();
-		}
+		}*/
 
 		// this will take care of stopping smoke animations
 		shutdownZone(xpos, ypos, dim);
