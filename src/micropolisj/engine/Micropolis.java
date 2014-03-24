@@ -218,7 +218,7 @@ public class Micropolis
 	public int zombiespawn_x;
 	public int zombiespawn_y;
 
-	// wenn der counter 0 erreicht, wird die katastrophe ausgelöst. dies soll das einmauern der zombies bestrafen. 
+	// wenn der counter 0 erreicht, wird die katastrophe ausgeloest. dies soll das einmauern der zombies bestrafen. 
 	public int zombie_cat_counter = 10;
 	
 	

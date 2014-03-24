@@ -152,7 +152,7 @@ public class ZombieSprite extends Sprite
 		if (this.count > 0) {
 			this.count--;
 		}
-		// jedesmal wenn ein zombie 250 ticks überlebt, wird der counter wieder um eins erhöht, aber nicht höher als 20
+		// jedesmal wenn ein zombie 250 ticks ueberlebt, wird der counter wieder um eins erhoeht, aber nicht hoeher als 20
 		if(this.count % 250 == 0 && city.zombie_cat_counter < 20) city.zombie_cat_counter++; 
 
 		int c = getChar(x, y);
