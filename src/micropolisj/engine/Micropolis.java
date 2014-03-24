@@ -1865,19 +1865,19 @@ public class Micropolis
 
 		int yumDuckets = budget.totalFunds + b.taxIncome;
 		assert yumDuckets >= 0;
-
-		if (yumDuckets >= b.roadFunded)
+		
+		if (yumDuckets >= b.hunterFunded)
 		{
-			yumDuckets -= b.roadFunded;
-			if (yumDuckets >= b.fireFunded)
+			yumDuckets -= b.hunterFunded;
+			if (yumDuckets >= b.roadFunded)
 			{
-				yumDuckets -= b.fireFunded;
-				if (yumDuckets >= b.policeFunded)
+				yumDuckets -= b.roadFunded;
+				if (yumDuckets >= b.fireFunded)
 				{
-					yumDuckets -= b.policeFunded;
-					if (yumDuckets >= b.hunterFunded)
+					yumDuckets -= b.fireFunded;
+					if (yumDuckets >= b.policeFunded)
 					{
-						yumDuckets -= b.hunterFunded;
+						yumDuckets -= b.policeFunded;
 					}
 					else
 					{
