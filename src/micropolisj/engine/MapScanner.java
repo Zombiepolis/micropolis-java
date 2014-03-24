@@ -271,9 +271,9 @@ class MapScanner extends TileBehavior
 		city.hunterCount++;
 		int z;
 		if (powerOn) {
-			z = city.policeEffect;
+			z = city.hunterEffect;
 		} else {
-			z = city.policeEffect / 2;
+			z = city.hunterEffect / 2;
 		}
 		if (powerOn) {
 			ArrayList<Sprite> hunter_sprites = city.getAllSprites(SpriteKind.HUN);
