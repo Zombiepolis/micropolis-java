@@ -268,7 +268,13 @@ class MapScanner extends TileBehavior
 	{
 		//hunter erzeugen, wenn es noch keinen zu diesem Haus gibt
 		boolean powerOn = checkZonePower();
-		
+		city.hunterCount++;
+		int z;
+		if (powerOn) {
+			z = city.hunterEffect;
+		} else {
+			z = city.hunterEffect / 2;
+		}
 		if (powerOn) {
 			ArrayList<Sprite> hunter_sprites = city.getAllSprites(SpriteKind.HUN);
 			boolean exists=false;

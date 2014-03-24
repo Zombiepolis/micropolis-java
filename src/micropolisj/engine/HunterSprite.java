@@ -76,7 +76,8 @@ public class HunterSprite extends Sprite {
 	            int min_dist=1000000;
 	            for(int i=0;i<zombie_sprites.size();i++) {
 	            	ZombieSprite zombie=(ZombieSprite)zombie_sprites.get(i);
-	            	if(getDis(zombie.x,zombie.y,x,y) < min_dist && getDis(origX, origY, zombie.x, zombie.y) < radius && getDis(zombie.x,zombie.y,(city.zombiespawn_x+1)*16+8,(city.zombiespawn_y+1)*16+8) > 200) {
+	            	//if(getDis(zombie.x,zombie.y,x,y) < min_dist && getDis(origX, origY, zombie.x, zombie.y) < radius && getDis(zombie.x,zombie.y,(city.zombiespawn_x+1)*16+8,(city.zombiespawn_y+1)*16+8) > 200) {
+	            	if(getDis(zombie.x,zombie.y,x,y) < min_dist && getDis(origX, origY, zombie.x, zombie.y) < radius) {
 	            		min_dist=getDis(zombie.x,zombie.y,x,y);
 	            		this.destX = zombie.x;
 	    	            this.destY = zombie.y;
