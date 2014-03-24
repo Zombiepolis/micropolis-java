@@ -152,6 +152,8 @@ public class ZombieSprite extends Sprite
 		if (this.count > 0) {
 			this.count--;
 		}
+		// jedesmal wenn ein zombie 250 ticks überlebt, wird der counter wieder um eins erhöht, aber nicht höher als 20
+		if(this.count % 250 == 0 && city.zombie_cat_counter < 20) city.zombie_cat_counter++; 
 
 		int c = getChar(x, y);
 		if (c == -1 || (c == RIVER && this.count != 0 && false)) {
@@ -180,6 +182,15 @@ public class ZombieSprite extends Sprite
 		this.frame=0;
 		city.zombieCount--;
 		city.sprites.remove(city.getCertainSprite(SpriteKind.ZOM, x, y));
+		if(this.count > 850) {
+			city.zombie_cat_counter--;
+			if(city.zombie_cat_counter <= 0) {
+				city.zombie_cat_counter=10;
+				city.sendMessageAt(MicropolisMessage.ZOMBIE_REVENGE_ATTACK, x,y);
+				city.makeSound(0, 0, Sound.MONSTER);
+				for(int a=0;a<10;a++) city.makeZombie();
+			}
+		}
 		System.gc();
 	}
 }
