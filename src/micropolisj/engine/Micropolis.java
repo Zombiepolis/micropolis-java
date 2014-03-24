@@ -22,6 +22,7 @@ import static micropolisj.engine.TileConstants.*;
  */
 public class Micropolis
 {
+	
 	static final Random DEFAULT_PRNG = new Random();
 
 	Random PRNG;
@@ -89,6 +90,8 @@ public class Micropolis
 	public int [][] fireRate;       //firestations reach- used for overlay graphs
 	int [][] policeMap;      //police stations- cleared and rebuilt each sim cycle
 	public int [][] policeMapEffect;//police stations reach- used for overlay graphs
+	int[][] hunterMap;
+	public int [][] hunterMapEffect;
 
 	/** For each 8x8 section of city, this is an integer between 0 and 64,
 	 * with higher numbers being closer to the center of the city. */
@@ -264,6 +267,8 @@ public class Micropolis
 		policeMapEffect = new int[smY][smX];
 		fireRate = new int[smY][smX];
 		comRate = new int[smY][smX];
+		hunterMap = new int [smY][smX];
+		hunterMapEffect = new int[smY][smX];
 
 		centerMassX = hX;
 		centerMassY = hY;
@@ -554,6 +559,7 @@ public class Micropolis
 			for (int x = 0; x < fireStMap[y].length; x++) {
 				fireStMap[y][x] = 0;
 				policeMap[y][x] = 0;
+				hunterMap[y][x] = 0;
 			}
 		}
 	}
@@ -1869,40 +1875,56 @@ public class Micropolis
 				if (yumDuckets >= b.policeFunded)
 				{
 					yumDuckets -= b.policeFunded;
+					if (yumDuckets >= b.hunterFunded)
+					{
+						yumDuckets -= b.hunterFunded;
+					}
+					else
+					{
+						assert b.policeRequest != 0;
+						
+						b.policeFunded = yumDuckets;
+						b.policePercent = (double)b.policeFunded / (double)b.policeRequest;
+						yumDuckets = 0;
+					}
 				}
 				else
 				{
-					assert b.policeRequest != 0;
-
-					b.policeFunded = yumDuckets;
-					b.policePercent = (double)b.policeFunded / (double)b.policeRequest;
+					assert b.fireRequest != 0;
+					
+					b.fireFunded = yumDuckets;
+					b.firePercent = (double)b.fireFunded / (double)b.fireRequest;
+					b.policeFunded = 0;
+					b.policePercent = 0.0;
 					yumDuckets = 0;
 				}
 			}
 			else
 			{
-				assert b.fireRequest != 0;
+				assert b.roadRequest != 0;
 
-				b.fireFunded = yumDuckets;
-				b.firePercent = (double)b.fireFunded / (double)b.fireRequest;
+				b.roadFunded = yumDuckets;
+				b.roadPercent = (double)b.roadFunded / (double)b.roadRequest;
+				b.fireFunded = 0;
+				b.firePercent = 0.0;
 				b.policeFunded = 0;
 				b.policePercent = 0.0;
-				yumDuckets = 0;
 			}
 		}
-		else
-		{
-			assert b.roadRequest != 0;
-
-			b.roadFunded = yumDuckets;
-			b.roadPercent = (double)b.roadFunded / (double)b.roadRequest;
-			b.fireFunded = 0;
-			b.firePercent = 0.0;
-			b.policeFunded = 0;
-			b.policePercent = 0.0;
+		else{
+				assert b.hunterRequest != 0;
+			
+				b.hunterFunded = yumDuckets;
+				b.hunterPercent = (double)b.hunterFunded / (double)b.roadRequest;			
+				b.roadFunded = 0;
+				b.roadPercent = 0.0;		
+				b.fireFunded = 0;
+				b.firePercent = 0.0;
+				b.policeFunded = 0;
+				b.policePercent = 0.0;
 		}
 
-		b.operatingExpenses = b.roadFunded + b.fireFunded + b.policeFunded;
+		b.operatingExpenses = b.roadFunded + b.fireFunded + b.policeFunded + b.hunterFunded;
 		b.newBalance = b.previousBalance + b.taxIncome - b.operatingExpenses;
 
 		return b;
