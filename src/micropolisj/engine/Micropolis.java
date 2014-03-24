@@ -30,6 +30,8 @@ public class Micropolis
 	// full size arrays
 	char [][] map;
 	boolean [][] powerMap;
+	
+	public static int zombieKillTotal = 0;
 
 	// half-size arrays
 
@@ -1796,6 +1798,7 @@ public class Micropolis
 		public int cityTime;
 		public int totalFunds;
 		public int taxIncome;
+		public int zombieIncome;
 		public int operatingExpenses;
 	}
 	public ArrayList<FinancialHistory> financialHistory = new ArrayList<FinancialHistory>();
@@ -1803,17 +1806,20 @@ public class Micropolis
 	void collectTax()
 	{
 		int revenue = budget.taxFund / TAXFREQ;
+		int zombieRevenue = budget.zombieIncome;
 		int expenses = -(budget.roadFundEscrow + budget.fireFundEscrow + budget.policeFundEscrow + budget.hunterFundEscrow) / TAXFREQ;
 
 		FinancialHistory hist = new FinancialHistory();
 		hist.cityTime = cityTime;
 		hist.taxIncome = revenue;
+		hist.zombieIncome = zombieRevenue;
 		hist.operatingExpenses = expenses;
 
 		cashFlow = revenue - expenses;
 		spend(-cashFlow);
 
 		hist.totalFunds = budget.totalFunds;
+		hist.zombieIncome = budget.zombieIncome;
 		financialHistory.add(0,hist);
 
 		budget.taxFund = 0;
@@ -1822,6 +1828,7 @@ public class Micropolis
 		budget.policeFundEscrow = 0;
 		budget.hunterFundEscrow = 0;
 	}
+	
 
 	/** Annual maintenance cost of each police station. */
 	static final int POLICE_STATION_MAINTENANCE = 100;
@@ -1846,7 +1853,9 @@ public class Micropolis
 		b.previousBalance = budget.totalFunds;
 		b.taxIncome = (int)Math.round(lastTotalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
 		assert b.taxIncome >= 0;
-
+		b.zombieIncome = zombieKillTotal*10;
+		zombieKillTotal = 0;
+		
 		b.roadRequest = (int)Math.round((lastRoadTotal + lastRailTotal * 2) * RLevels[gameLevel]);
 		b.fireRequest = FIRE_STATION_MAINTENANCE * lastFireStationCount;
 		b.policeRequest = POLICE_STATION_MAINTENANCE * lastPoliceCount;
@@ -1857,7 +1866,7 @@ public class Micropolis
 		b.policeFunded = (int)Math.round(b.policeRequest * b.policePercent);
 		b.hunterFunded = (int)Math.round(b.hunterRequest * b.hunterPercent);
 
-		int yumDuckets = budget.totalFunds + b.taxIncome;
+		int yumDuckets = budget.totalFunds + b.taxIncome + b.zombieIncome;
 		assert yumDuckets >= 0;
 
 		if (yumDuckets >= b.roadFunded)
@@ -1903,7 +1912,7 @@ public class Micropolis
 		}
 
 		b.operatingExpenses = b.roadFunded + b.fireFunded + b.policeFunded;
-		b.newBalance = b.previousBalance + b.taxIncome - b.operatingExpenses;
+		b.newBalance = b.previousBalance + b.taxIncome + b.zombieIncome - b.operatingExpenses;
 
 		return b;
 	}
@@ -2493,21 +2502,6 @@ public class Micropolis
 		assert dim.height >= 3;
 
 		int zoneBase = (zoneTile&LOMASK) - 1 - dim.width;
-		
-		//kills zombie hunter, if this tile had a zombie hunter base on it: geht noch nicht
-		/*if (isHunterHouse(zoneTile)){
-			
-			ArrayList<Sprite> hunter_sprites = this.city.getAllSprites(SpriteKind.HUN);
-			
-			int i = 0;
-			HunterSprite hunter = (HunterSprite) hunter_sprites.get(i);
-			
-			while ((!(hunter.getOrigX() == xpos && hunter.getOrigY() == ypos)) && i < hunter_sprites.size()){
-				hunter = (HunterSprite) hunter_sprites.get(i);
-				i++;
-			}
-			hunter.explodeSprite();
-		}*/
 
 		// this will take care of stopping smoke animations
 		shutdownZone(xpos, ypos, dim);
@@ -2807,10 +2801,11 @@ public class Micropolis
 	public int getZombLevel(){
 		return zombLevel;
 	}
-	
 
 	public void setFunds(int totalFunds)
 	{
 		budget.totalFunds = totalFunds;
 	}
+	
+	
 }

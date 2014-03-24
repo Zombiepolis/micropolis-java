@@ -10,7 +10,6 @@ public class HunterSprite extends Sprite {
 	int destY;
 	int origX;
 	int origY;
-
 	int radius = 350;
 	
 	static int [] CDx = { 0,  0,  3,  5,  3,  0, -3, -5, -3 };
@@ -20,7 +19,7 @@ public class HunterSprite extends Sprite {
 	public HunterSprite(Micropolis engine, int xpos, int ypos)
 	{
 		super(engine, SpriteKind.HUN);
-		this.x = xpos * 16 + 8; //dies aendern
+		this.x = xpos * 16 + 8;
 		this.y = ypos * 16 + 8;
 		this.width = 32;
 		this.height = 32;
@@ -32,7 +31,7 @@ public class HunterSprite extends Sprite {
 
 		this.origX = x;
 		this.origY = y;
-		this.count = 20; //war 1500
+		this.count = 20;
 		this.frame = 5;
 	}
 
@@ -72,7 +71,6 @@ public class HunterSprite extends Sprite {
 			// attract hunter to zombies
 			if (city.hasSprite(SpriteKind.ZOM)) {
 
-	            //ZombieSprite zombie = (ZombieSprite) city.getSprite(SpriteKind.ZOM);
 	            ArrayList<Sprite> zombie_sprites = city.getAllSprites(SpriteKind.ZOM);
 	            
 	            int min_dist=1000000;
@@ -101,8 +99,6 @@ public class HunterSprite extends Sprite {
 				this.destY = origY;
 			}
 			
-		
-
 		int z = this.frame;
 		if (city.acycle % 3 == 0) {
 			int d = getDir(x, y, destX, destY);
@@ -120,6 +116,7 @@ public class HunterSprite extends Sprite {
 				ZombieSprite ss=(ZombieSprite)s;
 				ss.kill();
 				city.sprites.add(new ZombieExplosionSprite(city, s.x, s.y));
+				Micropolis.zombieKillTotal++;
 			}
 		}
 		

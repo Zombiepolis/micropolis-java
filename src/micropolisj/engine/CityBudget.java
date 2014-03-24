@@ -24,6 +24,11 @@ public class CityBudget
 	int taxFund;
 
 	/**
+	 * Amount of money collected through the zombie hunter killing zombies
+	 */
+	int zombieIncome;
+	
+	/**
 	 * Amount of prepaid road maintenance (in 1/TAXFREQ's).
 	 */
 	int roadFundEscrow;

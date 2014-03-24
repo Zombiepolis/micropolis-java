@@ -16,6 +16,7 @@ public class BudgetNumbers
 {
 	public int taxRate;
 	public int taxIncome;
+	public int zombieIncome;
 	public int operatingExpenses;
 	public int previousBalance;
 	public int newBalance;
