@@ -2050,7 +2050,7 @@ public class Micropolis
 		n = dis.readInt();                     //62,63... road percent
 		hunterPercent = (double)n / 65536.0;
 
-		for (int i = 64; i < 120; i++)
+		for (int i = 66; i < 120; i++)
 		{
 			dis.readShort();
 		}
@@ -2112,7 +2112,7 @@ public class Micropolis
 		out.writeInt((int)(hunterPercent * 65536));
 
 		//64
-		for (int i = 64; i < 120; i++) {
+		for (int i = 66; i < 120; i++) {
 			out.writeShort(0);
 		}
 	}
