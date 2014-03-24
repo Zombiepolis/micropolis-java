@@ -2259,7 +2259,7 @@ public class Micropolis
 		return lastCityPop;
 	}
 
-	void makeSound(int x, int y, Sound sound)
+	public void makeSound(int x, int y, Sound sound)
 	{
 		fireCitySound(sound, new CityLocation(x,y));
 	}
@@ -2413,6 +2413,7 @@ public class Micropolis
 			sprites.add(new ZombieSprite(this, xpos, ypos));
 			zombieCount++;
 			if (zombieCount == 20) {
+				makeSound(xpos, ypos, Sound.MONSTER);
 				sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, xpos,ypos);
 			}
 		}
