@@ -59,6 +59,7 @@ public enum MicropolisMessage
 	MELTDOWN_REPORT,        // 43            doMeltdown
 	RIOTING_REPORT,
 	ZOMBIE_INVASION,
+	ZOMBIE_REVENGE_ATTACK,
 	// added by Jason
 	NO_NUCLEAR_PLANTS,
 	ZOMBIE_DEATH;

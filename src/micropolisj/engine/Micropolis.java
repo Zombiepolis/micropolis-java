@@ -11,6 +11,8 @@ package micropolisj.engine;
 import java.io.*;
 import java.util.*;
 
+import micropolisj.gui.MainWindow;
+
 import static micropolisj.engine.TileConstants.*;
 
 /**
@@ -207,6 +209,10 @@ public class Micropolis
 	public int zombiespawn_x;
 	public int zombiespawn_y;
 
+	// wenn der counter 0 erreicht, wird die katastrophe ausgelöst. dies soll das einmauern der zombies bestrafen. 
+	public int zombie_cat_counter = 10;
+	
+	
 	public void spend(int amount)
 	{
 		budget.totalFunds -= amount;

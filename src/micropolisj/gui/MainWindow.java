@@ -1562,7 +1562,7 @@ public class MainWindow extends JFrame
 		startTimer();
 	}
 
-	private void onInvokeDisasterClicked(Disaster disaster)
+	public void onInvokeDisasterClicked(Disaster disaster)
 	{
 		dirty1 = true;
 		switch (disaster) {
