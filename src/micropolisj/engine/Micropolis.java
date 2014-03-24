@@ -896,7 +896,7 @@ public class Micropolis
 
 		fireMapOverlayDataChanged(MapState.POLICE_OVERLAY);
 	}
-
+	
 	void doDisasters()
 	{
 		if (floodCnt > 0) {
