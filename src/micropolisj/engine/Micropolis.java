@@ -2277,11 +2277,7 @@ public class Micropolis
 			assert testBounds(x, y);
 
 			if (isVulnerable(getTile(x, y))) {
-				if (PRNG.nextInt(4) != 0) {
-					setTile(x, y, (char)(RUBBLE + PRNG.nextInt(4)));
-				} else {
-					setTile(x, y, (char)(FIRE + PRNG.nextInt(8)));
-				}
+				makeRubbleAndFire(x, y);
 			}
 		}
 	}
@@ -2380,18 +2376,6 @@ public class Micropolis
 	}
 	
 	public void makeZombie() {
-		
-		/*for (int i = 0; i < 300; i++) {
-			int x = PRNG.nextInt(getWidth() - 19) + 10;
-			int y = PRNG.nextInt(getHeight() - 9) + 5;
-			int t = getTile(x, y);
-			if (t == RIVER) {
-				makeZombieAt(x, y);
-				return;
-			}
-		}*/
-
-		// no "nice" location found, just start in center of map then
 		
 		//get random x and y
 		int x = (int)(Math.random()*(map[0].length - 19))+1;
@@ -2560,6 +2544,14 @@ public class Micropolis
 	void makeExplosion(int xpos, int ypos)
 	{
 		makeExplosionAt(xpos*16+8, ypos*16+8);
+	}
+	
+	void makeRubbleAndFire(int x, int y){
+		if (PRNG.nextInt(4) != 0) {
+			setTile(x, y, (char)(RUBBLE + PRNG.nextInt(4)));
+		} else {
+			setTile(x, y, (char)(FIRE + PRNG.nextInt(8)));
+		}
 	}
 
 	/**

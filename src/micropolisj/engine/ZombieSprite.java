@@ -167,8 +167,8 @@ public class ZombieSprite extends Sprite
 				s.explodeSprite();
 			}
 		}
-
-		destroyTile(x / 16, y / 16);
+		
+		zombieDestroy(x / 16, y / 16);
 	}
 	
 	public void kill() {

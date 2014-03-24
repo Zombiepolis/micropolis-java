@@ -202,7 +202,20 @@ public abstract class Sprite
 			}
 		}
 	}
-
+	
+	/**
+	 * Destroys location if it's a residental, commerical or industrial area or a (nuclear or coal) power plant, stadium, police or firestation, port or airport and not a zone center.
+	 */
+	final void zombieDestroy(int xpos, int ypos){
+		if (!city.testBounds(xpos, ypos))
+			return;
+		int t = city.getTile(xpos, ypos);
+		
+		if (isVulnerable(t)) {
+			city.makeRubbleAndFire(xpos, ypos);
+		}
+	}
+	
 	/**
 	 * Helper function for rotating a sprite.
 	 * @param p the sprite's current attitude (1-8)
