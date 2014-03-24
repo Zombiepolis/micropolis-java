@@ -68,11 +68,7 @@ public class ZombieSprite extends Sprite
 		
 		CityLocation p;
 		
-		if (city.getZombLevel() < 2 || true){ //wenn es noch kein pollution center gibt laufen die zombies doof in die linke obere ecke
-			p = new CityLocation((int)(Math.random()*(engine.map[0].length - 19))+10,(int)(Math.random()*(engine.map.length - 9))+5);
-		} else {
-			//p = city.getLocationOfMaxPollution();
-		}
+		p = new CityLocation((int)(Math.random()*(engine.map[0].length - 19))+10,(int)(Math.random()*(engine.map.length - 9))+5);
 			
 		this.destX = p.x * 16 + 8;
 		this.destY = p.y * 16 + 8;
@@ -156,9 +152,8 @@ public class ZombieSprite extends Sprite
 		if(this.count % 250 == 0 && city.zombie_cat_counter < 20) city.zombie_cat_counter++; 
 
 		int c = getChar(x, y);
-		if (c == -1 || (c == RIVER && this.count != 0 && false)) {
-			//zombie killen und neuen erstellen
-			city.makeZombie();
+		if (c == -1 || (c == RIVER && this.count != 0)) {
+			//zombie killen
 			kill();
 		}
 
