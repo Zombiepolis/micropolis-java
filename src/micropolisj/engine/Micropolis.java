@@ -132,6 +132,7 @@ public class Micropolis
 	int seaportCount;
 	int airportCount;
 	int zombieCount;
+	int hunterCount;
 
 	int totalPop;
 	int lastCityPop;
@@ -142,6 +143,7 @@ public class Micropolis
 	int lastTotalPop;
 	int lastFireStationCount;
 	int lastPoliceCount;
+	int lastHunterCount;
 
 	int trafficMaxLocationX;
 	int trafficMaxLocationY;
@@ -179,11 +181,13 @@ public class Micropolis
 	public double roadPercent = 1.0;
 	public double policePercent = 1.0;
 	public double firePercent = 1.0;
+	public double hunterPercent = 1.0;
 
 	int taxEffect = 7;
 	int roadEffect = 32;
 	int policeEffect = 1000;
 	int fireEffect = 1000;
+	int hunterEffect = 1000;
 
 	int cashFlow; //net change in totalFunds in previous year
 
@@ -538,6 +542,7 @@ public class Micropolis
 		churchCount = 0;
 		policeCount = 0;
 		fireStationCount = 0;
+		hunterCount = 0;
 		stadiumCount = 0;
 		coalCount = 0;
 		nuclearCount = 0;
@@ -1761,6 +1766,7 @@ public class Micropolis
 		lastTotalPop = totalPop;
 		lastFireStationCount = fireStationCount;
 		lastPoliceCount = policeCount;
+		lastHunterCount = hunterCount;
 
 		BudgetNumbers b = generateBudget();
 
@@ -1768,6 +1774,7 @@ public class Micropolis
 		budget.roadFundEscrow -= b.roadFunded;
 		budget.fireFundEscrow -= b.fireFunded;
 		budget.policeFundEscrow -= b.policeFunded;
+		budget.hunterFundEscrow -= b.hunterFunded;
 
 		taxEffect = b.taxRate;
 		roadEffect = b.roadRequest != 0 ?
@@ -1778,6 +1785,9 @@ public class Micropolis
 			1000;
 		fireEffect = b.fireRequest != 0 ?
 			(int)Math.floor(1000.0 * (double)b.fireFunded / (double)b.fireRequest) :
+			1000;
+		hunterEffect = b.hunterRequest !=0 ?
+			(int)Math.floor(1000.0 * (double)b.hunterFunded / (double)b.hunterRequest) :
 			1000;
 	}
 
@@ -1793,7 +1803,7 @@ public class Micropolis
 	void collectTax()
 	{
 		int revenue = budget.taxFund / TAXFREQ;
-		int expenses = -(budget.roadFundEscrow + budget.fireFundEscrow + budget.policeFundEscrow) / TAXFREQ;
+		int expenses = -(budget.roadFundEscrow + budget.fireFundEscrow + budget.policeFundEscrow + budget.hunterFundEscrow) / TAXFREQ;
 
 		FinancialHistory hist = new FinancialHistory();
 		hist.cityTime = cityTime;
@@ -1810,6 +1820,7 @@ public class Micropolis
 		budget.roadFundEscrow = 0;
 		budget.fireFundEscrow = 0;
 		budget.policeFundEscrow = 0;
+		budget.hunterFundEscrow = 0;
 	}
 
 	/** Annual maintenance cost of each police station. */
@@ -1817,6 +1828,8 @@ public class Micropolis
 
 	/** Annual maintenance cost of each fire station. */
 	static final int FIRE_STATION_MAINTENANCE = 100;
+	
+	static final int HUNTER_MAINTENANCE = 100;
 
 	/**
 	 * Calculate the current budget numbers.
@@ -1828,6 +1841,7 @@ public class Micropolis
 		b.roadPercent = Math.max(0.0, roadPercent);
 		b.firePercent = Math.max(0.0, firePercent);
 		b.policePercent = Math.max(0.0, policePercent);
+		b.hunterPercent = Math.max(0.0, hunterPercent);
 
 		b.previousBalance = budget.totalFunds;
 		b.taxIncome = (int)Math.round(lastTotalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
@@ -1836,10 +1850,12 @@ public class Micropolis
 		b.roadRequest = (int)Math.round((lastRoadTotal + lastRailTotal * 2) * RLevels[gameLevel]);
 		b.fireRequest = FIRE_STATION_MAINTENANCE * lastFireStationCount;
 		b.policeRequest = POLICE_STATION_MAINTENANCE * lastPoliceCount;
+		b.hunterRequest = HUNTER_MAINTENANCE * lastHunterCount;
 
 		b.roadFunded = (int)Math.round(b.roadRequest * b.roadPercent);
 		b.fireFunded = (int)Math.round(b.fireRequest * b.firePercent);
 		b.policeFunded = (int)Math.round(b.policeRequest * b.policePercent);
+		b.hunterFunded = (int)Math.round(b.hunterRequest * b.hunterPercent);
 
 		int yumDuckets = budget.totalFunds + b.taxIncome;
 		assert yumDuckets >= 0;
@@ -2000,6 +2016,8 @@ public class Micropolis
 		firePercent = (double)n / 65536.0;
 		n = dis.readInt();                     //62,63... road percent
 		roadPercent = (double)n / 65536.0;
+		n = dis.readInt();                     //62,63... road percent
+		hunterPercent = (double)n / 65536.0;
 
 		for (int i = 64; i < 120; i++)
 		{
@@ -2060,6 +2078,7 @@ public class Micropolis
 		out.writeInt((int)(policePercent * 65536));
 		out.writeInt((int)(firePercent * 65536));
 		out.writeInt((int)(roadPercent * 65536));
+		out.writeInt((int)(hunterPercent * 65536));
 
 		//64
 		for (int i = 64; i < 120; i++) {
