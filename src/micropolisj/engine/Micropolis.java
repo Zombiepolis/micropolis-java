@@ -2440,7 +2440,7 @@ public class Micropolis
 	
 	void makeZombieAt(int xpos, int ypos) {
 		assert !hasSprite(SpriteKind.ZOM);
-		if(zombieCount < 30) {
+		if(zombieCount < 70) {
 			sprites.add(new ZombieSprite(this, xpos, ypos));
 			zombieCount++;
 			if (zombieCount == 20) {

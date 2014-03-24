@@ -26,6 +26,7 @@ public class ZombieSprite extends Sprite
 	int origX;
 	int origY;
 	int step;
+	double slowFactor;
 	boolean flag; //true if the zombie wants to return home
 	
 	//GODZILLA FRAMES
@@ -56,6 +57,7 @@ public class ZombieSprite extends Sprite
 		this.height = 48;
 		this.offx = -24;
 		this.offy = -24;
+		this.slowFactor = 1;
 
 		this.origX = x;
 		this.origY = y;
@@ -138,12 +140,14 @@ public class ZombieSprite extends Sprite
 			}
 		}
 
-		this.frame = ((d * 3) + z) + 1;
+		if(this.count % slowFactor == 0) {
+			this.frame = ((d * 3) + z) + 1;
 
-		assert this.frame >= 1 && this.frame <= 16;
+			assert this.frame >= 1 && this.frame <= 16;
 
-		this.x += Gx[d];
-		this.y += Gy[d];
+			this.x += Gx[d];
+			this.y += Gy[d];
+		}
 
 		if (this.count > 0) {
 			this.count--;
@@ -152,7 +156,15 @@ public class ZombieSprite extends Sprite
 		if(this.count % 250 == 0 && city.zombie_cat_counter < 20) city.zombie_cat_counter++; 
 
 		int c = getChar(x, y);
-		if (c == -1 || (c == RIVER && this.count != 0)) {
+		if(c==RIVER) {
+			// zombie langsamer machen
+			slowFactor=3;
+		}
+		else {
+			// zombie normalschnell machen
+			slowFactor=1;
+		}
+		if (c == -1) {
 			//zombie killen
 			kill();
 		}
