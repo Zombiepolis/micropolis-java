@@ -1587,6 +1587,7 @@ public class MainWindow extends JFrame
 			getEngine().makeEarthquake();
 			break;
 		case ZOMBIE:
+			getEngine().makeSound(0, 0, Sound.MONSTER);
 			for(int a=0;a<10;a++) getEngine().makeZombie();
 			break;
 		default:
