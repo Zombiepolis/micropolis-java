@@ -193,6 +193,7 @@ private class HandlerScenario implements MouseListener{
 							File file = fc.getSelectedFile();
 							Micropolis newEngine = new Micropolis();
 							newEngine.load(file);
+							
 							startPlaying(newEngine, file);
 					}
 					dispose();
@@ -264,6 +265,10 @@ private class HandlerScenario implements MouseListener{
 				MainWindow win = new MainWindow();
 				win.setVisible(true);
 				win.setEngine(newEngine);
+				if (newEngine.oldMapLoaded < 0)
+				{
+					win.oldLoad();
+				}
 				win.currentFile = file;
 				win.makeClean();
 				dispose();

@@ -91,7 +91,7 @@ public class NewCityDialog extends JDialog
 			levelBtns2.put(lev2, radioBtn2);
 		}
 		levelBox.add(Box.createVerticalGlue());
-		setZombieLevel(ZombLevel.MIN_LEVEL);
+		setZombieLevel(ZombLevel.STD_LEVEL);
 
 		JPanel buttonPane = new JPanel();
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -165,6 +165,10 @@ public class NewCityDialog extends JDialog
 	{
 		MainWindow win = (MainWindow) getOwner();
 		win.setEngine(newEngine);
+		if (newEngine.oldMapLoaded < 0)
+		{
+			win.oldLoad();
+		}
 		win.currentFile = file;
 		win.makeClean();
 		dispose();

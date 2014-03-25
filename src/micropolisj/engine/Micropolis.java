@@ -11,7 +11,8 @@ package micropolisj.engine;
 import java.io.*;
 import java.util.*;
 
-import micropolisj.gui.MainWindow;
+import javax.swing.JOptionPane;
+
 
 import static micropolisj.engine.TileConstants.*;
 
@@ -217,6 +218,9 @@ public class Micropolis
 	
 	public int zombiespawn_x;
 	public int zombiespawn_y;
+	public int oldMapLoaded = 0;
+	private int [] newGraveyard = {10,20,30,40,50,60,70,80,90};
+	
 
 	// wenn der counter 0 erreicht, wird die katastrophe ausgeloest. dies soll das einmauern der zombies bestrafen. 
 	public int zombie_cat_counter = 10;
@@ -342,6 +346,13 @@ public class Micropolis
 			l.fundsChanged();
 		}
 	}
+	
+	void fireOldMapLoaded()
+	{
+		for (Listener l : listeners) {
+			l.oldLoad();
+		}
+	}
 
 	void fireMapOverlayDataChanged(MapState overlayDataType)
 	{
@@ -454,6 +465,8 @@ public class Micropolis
 		 * or simSpeed change.
 		 */
 		void optionsChanged();
+		
+		void oldLoad();
 	}
 
 	public int getWidth()
@@ -2081,10 +2094,22 @@ public class Micropolis
 		firePercent = (double)n / 65536.0;
 		n = dis.readInt();                     //62,63... road percent
 		roadPercent = (double)n / 65536.0;
-		n = dis.readInt();                     //62,63... road percent
+		n = dis.readInt();                     //64,65... hunter percent
 		hunterPercent = (double)n / 65536.0;
-		
-		for (int i = 66; i < 120; i++)
+
+		zombiespawn_x = dis.readInt();		   //66 - 69... zombie spawnpoint
+		zombiespawn_y = dis.readInt();
+		if ( (1 >= zombiespawn_x || zombiespawn_x >= 100) || (1 >= zombiespawn_y || zombiespawn_y >= 100) )
+		{
+			oldMapLoaded = -1;
+			simSpeed = Speed.PAUSED;
+			if (zombLevel != 1 && zombLevel != 2) {
+				zombLevel = 1;
+			}
+		}
+
+		for (int i = 70; i < 120; i++)
+
 		{
 			dis.readShort();
 		}
@@ -2094,7 +2119,7 @@ public class Micropolis
 		if (cityTime < 0) { cityTime = 0; }
 		if (cityTax < 0 || cityTax > 20) { cityTax = 7; }
 		if (gameLevel < 0 || gameLevel > 2) { gameLevel = 0; }
-		if (zombLevel < 0 || zombLevel > 2) { zombLevel = 0; }
+		if (zombLevel < 0 || zombLevel > 2) { zombLevel = 2; }
 		if (evaluation.cityClass < 0 || evaluation.cityClass > 5) { evaluation.cityClass = 0; }
 		if (evaluation.cityScore < 1 || evaluation.cityScore > 999) { evaluation.cityScore = 500; }
 
@@ -2102,6 +2127,16 @@ public class Micropolis
 		comCap = false;
 		indCap = false;
 	}
+	
+	static final char [][] CMatrix = new char[][] {
+		{ 969, 970, 971, 972, 973, 974 },
+		{ 975, 976, 977, 978, 979, 980 },
+		{ 981, 982, 983, 984, 985, 986 },
+		{ 987, 988, 989, 990, 991, 992 },
+		{ 993, 994, 995, 996, 997, 998 },
+		{ 999, 1000, 1001, 1002, 1003, 1004 }
+
+	};
 
 	void writeMisc(DataOutputStream out)
 		throws IOException
@@ -2147,9 +2182,11 @@ public class Micropolis
 		out.writeInt((int)(roadPercent * 65536));
 		out.writeInt((int)(hunterPercent * 65536));
 
-		//64
-		
-		for (int i = 66; i < 120; i++) {
+		//66
+		out.writeInt((int)(zombiespawn_x));
+		out.writeInt((int)(zombiespawn_y));
+		for (int i = 70; i < 120; i++) {
+
 			out.writeShort(0);
 		}
 	}
@@ -2157,13 +2194,45 @@ public class Micropolis
 	void loadMap(DataInputStream dis)
 		throws IOException
 	{
+		int graveyard_exists = 0;
 		for (int x = 0; x < DEFAULT_WIDTH; x++)
 		{
 			for (int y = 0; y < DEFAULT_HEIGHT; y++)
 			{
 				int z = dis.readShort();
+				if ((z & LOMASK) == GRAVEYARD){
+					graveyard_exists++;
+				}
 				z &= ~(1024 | 2048 | 4096 | 8192 | 16384); // clear ZONEBIT,ANIMBIT,BULLBIT,BURNBIT,CONDBIT on import
 				map[y][x] = (char) z;
+			}
+		}		
+		
+		if ( graveyard_exists == 0 )
+		{
+			boolean placeable = false;
+			do {
+				zombiespawn_x = newGraveyard[PRNG.nextInt(9)];
+				zombiespawn_y = newGraveyard[PRNG.nextInt(9)];
+				
+				if (map[zombiespawn_x][zombiespawn_y] == DIRT || map[zombiespawn_x][zombiespawn_y] == TREEBASE) {
+					placeable = true;
+				} 
+			} while ( placeable == false );
+			
+			for (int x = 0; x < 6; x++)
+			{
+				for (int y = 0; y < 6; y++)
+				{
+					char tmp = CMatrix[y][x];
+					
+					tmp &= LOMASK;
+					
+					int xloc = zombiespawn_x + x;
+					int yloc = zombiespawn_y + y;
+					
+					map[yloc][xloc] = tmp;
+				}
 			}
 		}
 	}
@@ -2249,14 +2318,16 @@ public class Micropolis
 		loadMisc(dis);
 		loadMap(dis);
 		dis.close();
-
+		
 		checkPowerMap();
-
+		
 		fireWholeMapChanged();
 		fireDemandChanged();
 		fireFundsChanged();
+		
+		
 	}
-
+	
 	public void save(File filename)
 		throws IOException
 	{

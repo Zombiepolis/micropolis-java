@@ -147,4 +147,5 @@ public class DemandIndicator extends JComponent
 	public void evaluationChanged() { }
 	public void fundsChanged() { }
 	public void optionsChanged() { }
+	public void oldLoad() { }
 }
