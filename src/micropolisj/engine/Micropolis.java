@@ -673,6 +673,7 @@ public class Micropolis
 
 		case 13:
 			crimeScan();
+			hunterScan();
 			break;
 
 		case 14:
@@ -864,6 +865,22 @@ public class Micropolis
 				}
 			}
 		}
+	}
+	
+	/**
+	 * extrahiert die Abdeckung durch Hunter aus der Map und uebertraegt sie auf die
+	 * hunter-overlay-Karte.
+	 * hunterScan() wird in der Simulation gemeinsam mit crimeScan() aufgerufen.
+	 * @see simulate()  
+	 */
+	void hunterScan(){
+		for (int sy = 0; sy < hunterMap.length; sy++) {
+			for (int sx = 0; sx < hunterMap[sy].length; sx++) {
+				hunterMapEffect[sy][sx] = hunterMap[sy][sx];
+			}
+		}
+		
+		fireMapOverlayDataChanged(MapState.HUNTER_OVERLAY);
 	}
 
 	void crimeScan()
