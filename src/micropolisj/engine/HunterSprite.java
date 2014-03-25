@@ -126,11 +126,9 @@ public class HunterSprite extends Sprite {
 				ZombieSprite ss=(ZombieSprite)s;
 				ss.kill();
 				city.sprites.add(new ZombieExplosionSprite(city, s.x, s.y));
-				Micropolis.zombieKillTotal++;
+				Micropolis.addToZombieKillTotal(1);
 			}
 		}
-		
-		
 		
 	}
 }
