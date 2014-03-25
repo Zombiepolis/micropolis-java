@@ -131,6 +131,7 @@ public class CityEval
 		problemTable.put(CityProblem.TRAFFIC, averageTrf());
 		problemTable.put(CityProblem.UNEMPLOYMENT, getUnemployment());
 		problemTable.put(CityProblem.FIRE, getFire());
+		problemTable.put(CityProblem.ZOMBIE, getZombie());
 
 		problemVotes = voteProblems(problemTable);
 
@@ -205,6 +206,19 @@ public class CityEval
 			b = 255;
 		}
 		return b;
+	}
+	
+	int getZombie()
+	{
+		//FIXME- maxWert um 50 %; 
+		int a = (engine.zombieCount);
+		if (a==0)
+			return 0;
+		double z = (double) engine.zombieCount / (double) engine.MAX_ZOMBIES;
+		a = (int) Math.floor(z * 255);
+		
+		//Fill
+		return a;
 	}
 
 	int getFire()

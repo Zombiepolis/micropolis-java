@@ -139,6 +139,7 @@ public class Micropolis
 	int airportCount;
 	int zombieCount;
 	int hunterCount;
+	final int MAX_ZOMBIES = 70;
 
 	int totalPop;
 	int lastCityPop;
@@ -2557,7 +2558,7 @@ public class Micropolis
 	
 	void makeZombieAt(int xpos, int ypos) {
 		assert !hasSprite(SpriteKind.ZOM);
-		if(zombieCount < 70) {
+		if(zombieCount < MAX_ZOMBIES) {
 			sprites.add(new ZombieSprite(this, xpos, ypos));
 			zombieCount++;
 			// gib die invasionsnachricht nur aus, wenn die letzte invasionsnachricht mindestens 2 minuten her ist
