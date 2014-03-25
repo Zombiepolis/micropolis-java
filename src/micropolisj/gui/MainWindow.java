@@ -1590,6 +1590,7 @@ public class MainWindow extends JFrame
 		case ZOMBIE:
 			getEngine().makeSound(0, 0, Sound.MONSTER);
 			for(int a=0;a<10;a++) getEngine().makeZombie();
+			getEngine().sendMessage(MicropolisMessage.ZOMBIE_OUTBREAK);
 			break;
 		default:
 			assert false; //unknown disaster

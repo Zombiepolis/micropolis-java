@@ -2753,7 +2753,7 @@ public class Micropolis
 		// if it is a repeat.
 	}
 
-	void sendMessage(MicropolisMessage message)
+	public void sendMessage(MicropolisMessage message)
 	{
 		fireCityMessage(message, null);
 	}
