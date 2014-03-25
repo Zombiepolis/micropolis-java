@@ -2065,8 +2065,6 @@ public class Micropolis
 		roadPercent = (double)n / 65536.0;
 		n = dis.readInt();                     //62,63... road percent
 		hunterPercent = (double)n / 65536.0;
-		n = dis.readInt();
-		budget.zombieIncome = (int)n;
 		
 		for (int i = 66; i < 120; i++)
 		{
@@ -2132,8 +2130,6 @@ public class Micropolis
 		out.writeInt((int)(hunterPercent * 65536));
 
 		//64
-		
-		out.writeInt(budget.zombieIncome); //hinzugefuegt, 64-65
 		
 		for (int i = 66; i < 120; i++) {
 			out.writeShort(0);
