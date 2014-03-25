@@ -52,7 +52,7 @@ public class MainWindow extends JFrame
 	boolean dirty2 = false;  //indicates if simulator took a step since last save
 	long lastSavedTime = 0;  //real-time clock of when file was last saved
 	boolean autoBudgetPending;
-
+	
 	static ImageIcon appIcon;
 	static {
 		appIcon = new ImageIcon(MainWindow.class.getResource("/micropolism.png"));
