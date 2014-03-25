@@ -40,7 +40,7 @@ public class ZombieExplosionSprite extends Sprite
 			this.frame++;
 		}
 
-		if (this.frame > 6) {
+		if (this.frame > 4) { //war 6
 			this.frame = 0;
 
 			return;
