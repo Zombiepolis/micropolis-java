@@ -71,6 +71,7 @@ public class Splashscreen extends JFrame{
 
 			panel = new JPanel(null,true);
 			panel.setSize(1000,700);
+			setLocationRelativeTo(null);
 			getContentPane().add(panel);
 			panel.add(jlSplashImage);
 			
