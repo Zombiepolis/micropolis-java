@@ -52,7 +52,7 @@ public class MainWindow extends JFrame
 	boolean dirty2 = false;  //indicates if simulator took a step since last save
 	long lastSavedTime = 0;  //real-time clock of when file was last saved
 	boolean autoBudgetPending;
-
+	
 	static ImageIcon appIcon;
 	static {
 		appIcon = new ImageIcon(MainWindow.class.getResource("/micropolism.png"));
@@ -1597,6 +1597,7 @@ public class MainWindow extends JFrame
 		case ZOMBIE:
 			getEngine().makeSound(0, 0, Sound.MONSTER);
 			for(int a=0;a<10;a++) getEngine().makeZombie();
+			getEngine().sendMessage(MicropolisMessage.ZOMBIE_OUTBREAK);
 			break;
 		default:
 			assert false; //unknown disaster

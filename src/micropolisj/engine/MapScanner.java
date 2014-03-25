@@ -286,6 +286,8 @@ class MapScanner extends TileBehavior
 			}
 			if(!exists) city.generateHunter(xpos, ypos);
 		}
+		
+		city.hunterMap[ypos/8][xpos/8] += z;
 	}
 
 	void doStadiumEmpty()

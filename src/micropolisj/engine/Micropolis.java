@@ -32,8 +32,8 @@ public class Micropolis
 	// full size arrays
 	char [][] map;
 	boolean [][] powerMap;
-	
-	public static int zombieKillTotal = 0;
+	private static int zombieKillTotal;
+	private static int lastZombieIncome;
 
 	// half-size arrays
 
@@ -224,6 +224,7 @@ public class Micropolis
 
 	// wenn der counter 0 erreicht, wird die katastrophe ausgeloest. dies soll das einmauern der zombies bestrafen. 
 	public int zombie_cat_counter = 10;
+	public long lastZombieInvasion = 0;
 	
 	
 	public void spend(int amount)
@@ -258,6 +259,8 @@ public class Micropolis
 		crimeMem = new int[hY][hX];
 		popDensity = new int[hY][hX];
 		trfDensity = new int[hY][hX];
+		
+		zombieKillTotal = 0;
 
 		int qX = (width+3)/4;
 		int qY = (height+3)/4;
@@ -283,6 +286,18 @@ public class Micropolis
 		zombiespawn_y=height/2;
 	}
 
+	public static int getZombieKillTotal(){
+		return zombieKillTotal;
+	}
+	
+	public static void setZombieKillTotal(int n){
+		zombieKillTotal = n;
+	}
+	
+	public static void addToZombieKillTotal(int n){
+		zombieKillTotal = zombieKillTotal + n;
+	}
+	
 	void fireCensusChanged()
 	{
 		for (Listener l : listeners) {
@@ -671,6 +686,7 @@ public class Micropolis
 
 		case 13:
 			crimeScan();
+			hunterScan();
 			break;
 
 		case 14:
@@ -862,6 +878,22 @@ public class Micropolis
 				}
 			}
 		}
+	}
+	
+	/**
+	 * extrahiert die Abdeckung durch Hunter aus der Map und uebertraegt sie auf die
+	 * hunter-overlay-Karte.
+	 * hunterScan() wird in der Simulation gemeinsam mit crimeScan() aufgerufen.
+	 * @see simulate()  
+	 */
+	void hunterScan(){
+		for (int sy = 0; sy < hunterMap.length; sy++) {
+			for (int sx = 0; sx < hunterMap[sy].length; sx++) {
+				hunterMapEffect[sy][sx] = hunterMap[sy][sx];
+			}
+		}
+		
+		fireMapOverlayDataChanged(MapState.HUNTER_OVERLAY);
 	}
 
 	void crimeScan()
@@ -1788,10 +1820,14 @@ public class Micropolis
 		lastFireStationCount = fireStationCount;
 		lastPoliceCount = policeCount;
 		lastHunterCount = hunterCount;
+		lastZombieIncome = getZombieKillTotal()*10;
 
 		BudgetNumbers b = generateBudget();
 
 		budget.taxFund += b.taxIncome;
+		budget.zombieIncome += b.zombieIncome;
+		b.zombieIncome = 0;
+		zombieKillTotal = 0;
 		budget.roadFundEscrow -= b.roadFunded;
 		budget.fireFundEscrow -= b.fireFunded;
 		budget.policeFundEscrow -= b.policeFunded;
@@ -1825,13 +1861,11 @@ public class Micropolis
 	void collectTax()
 	{
 		int revenue = budget.taxFund / TAXFREQ;
-		int zombieRevenue = budget.zombieIncome;
 		int expenses = -(budget.roadFundEscrow + budget.fireFundEscrow + budget.policeFundEscrow + budget.hunterFundEscrow) / TAXFREQ;
 
 		FinancialHistory hist = new FinancialHistory();
 		hist.cityTime = cityTime;
 		hist.taxIncome = revenue;
-		hist.zombieIncome = zombieRevenue;
 		hist.operatingExpenses = expenses;
 
 		cashFlow = revenue - expenses;
@@ -1842,6 +1876,7 @@ public class Micropolis
 		financialHistory.add(0,hist);
 
 		budget.taxFund = 0;
+		budget.zombieIncome = 0;
 		budget.roadFundEscrow = 0;
 		budget.fireFundEscrow = 0;
 		budget.policeFundEscrow = 0;
@@ -1872,8 +1907,7 @@ public class Micropolis
 		b.previousBalance = budget.totalFunds;
 		b.taxIncome = (int)Math.round(lastTotalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
 		assert b.taxIncome >= 0;
-		b.zombieIncome = zombieKillTotal*10;
-		zombieKillTotal = 0;
+		b.zombieIncome = getZombieKillTotal()*10; //muss einmal in jahr resetten
 		
 		b.roadRequest = (int)Math.round((lastRoadTotal + lastRailTotal * 2) * RLevels[gameLevel]);
 		b.fireRequest = FIRE_STATION_MAINTENANCE * lastFireStationCount;
@@ -2062,6 +2096,7 @@ public class Micropolis
 		roadPercent = (double)n / 65536.0;
 		n = dis.readInt();                     //64,65... hunter percent
 		hunterPercent = (double)n / 65536.0;
+
 		zombiespawn_x = dis.readInt();		   //66 - 69... zombie spawnpoint
 		zombiespawn_y = dis.readInt();
 		if ( (1 >= zombiespawn_x || zombiespawn_x >= 100) || (1 >= zombiespawn_y || zombiespawn_y >= 100) )
@@ -2074,10 +2109,13 @@ public class Micropolis
 		}
 
 		for (int i = 70; i < 120; i++)
+
 		{
 			dis.readShort();
 		}
 
+		
+		
 		if (cityTime < 0) { cityTime = 0; }
 		if (cityTax < 0 || cityTax > 20) { cityTax = 7; }
 		if (gameLevel < 0 || gameLevel > 2) { gameLevel = 0; }
@@ -2148,6 +2186,7 @@ public class Micropolis
 		out.writeInt((int)(zombiespawn_x));
 		out.writeInt((int)(zombiespawn_y));
 		for (int i = 70; i < 120; i++) {
+
 			out.writeShort(0);
 		}
 	}
@@ -2521,8 +2560,11 @@ public class Micropolis
 		if(zombieCount < 70) {
 			sprites.add(new ZombieSprite(this, xpos, ypos));
 			zombieCount++;
-			if (zombieCount == 20) {
+			// gib die invasionsnachricht nur aus, wenn die letzte invasionsnachricht mindestens 2 minuten her ist
+			if (zombieCount == 20 && System.currentTimeMillis()-lastZombieInvasion > 120000) {
+				lastZombieInvasion=System.currentTimeMillis();
 				makeSound(xpos, ypos, Sound.MONSTER);
+				
 				sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, xpos,ypos);
 			}
 		}
@@ -2822,7 +2864,7 @@ public class Micropolis
 		// if it is a repeat.
 	}
 
-	void sendMessage(MicropolisMessage message)
+	public void sendMessage(MicropolisMessage message)
 	{
 		fireCityMessage(message, null);
 	}
