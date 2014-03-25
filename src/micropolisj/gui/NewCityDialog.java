@@ -121,29 +121,6 @@ public class NewCityDialog extends JDialog
 			}});
 		buttonPane.add(btn);
 
-		btn = new JButton(strings.getString("welcome.load_city"));
-		btn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				onLoadCityClicked();
-			}});
-		buttonPane.add(btn);
-
-		if (showCancelOption) {
-			btn = new JButton(strings.getString("welcome.cancel"));
-			btn.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					onCancelClicked();
-				}});
-			buttonPane.add(btn);
-		}
-		else {
-			btn = new JButton(strings.getString("welcome.quit"));
-			btn.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
-					onQuitClicked();
-				}});
-			buttonPane.add(btn);
-		}
 
 		pack();
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -182,30 +159,6 @@ public class NewCityDialog extends JDialog
 		mapPane.setEngine(engine);
 
 		previousMapBtn.setEnabled(true);
-	}
-
-	private void onLoadCityClicked()
-	{
-		try
-		{
-			JFileChooser fc = new JFileChooser();
-			FileNameExtensionFilter filter1 = new FileNameExtensionFilter(strings.getString("cty_file"), EXTENSION);
-			fc.setFileFilter(filter1);
-
-			int rv = fc.showOpenDialog(this);
-			if (rv == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				Micropolis newEngine = new Micropolis();
-				newEngine.load(file);
-				startPlaying(newEngine, file);
-			}
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace(System.err);
-			JOptionPane.showMessageDialog(this, e, strings.getString("main.error_caption"),
-				JOptionPane.ERROR_MESSAGE);
-		}
 	}
 
 	void startPlaying(Micropolis newEngine, File file)

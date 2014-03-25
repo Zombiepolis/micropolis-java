@@ -11,21 +11,27 @@ package micropolisj;
 import javax.swing.*;
 
 import micropolisj.gui.MainWindow;
+import micropolisj.gui.Splashscreen;
 
 public class Main
 {
-     
+	public static Splashscreen splash = new Splashscreen();
+	
 	static void createAndShowGUI()
 	{        
 
-		MainWindow win = new MainWindow();
-		win.setVisible(true);
-		win.doNewCity(true);
+		splash.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		splash.setSize(1000,700);
+		splash.setResizable(false);
+		splash.setVisible(true);
+		//MainWindow win = new MainWindow();
+		//win.setVisible(true);
+		//win.doNewCity(true);
 	}
 
 	public static void main(String [] args)
 	{
-		SplashscreenZombie splash = new SplashscreenZombie(500);
+		
 		SwingUtilities.invokeLater(new Runnable() {
 		public void run() {
 			createAndShowGUI();
