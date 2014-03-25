@@ -2,6 +2,8 @@ package micropolisj.engine;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 
 public class HunterSprite extends Sprite {
 
@@ -11,6 +13,7 @@ public class HunterSprite extends Sprite {
 	int origX;
 	int origY;
 	int radius = 350;
+	double slowFactor = 0;
 	
 	static int [] CDx = { 0,  0,  3,  5,  3,  0, -3, -5, -3 };
 	static int [] CDy = { 0, -5, -3,  0,  3,  5,  3,  0, -3 };
@@ -101,13 +104,19 @@ public class HunterSprite extends Sprite {
 			}
 			
 		int z = this.frame;
-		if (city.acycle % 3 == 0) {
-			int d = getDir(x, y, destX, destY);
-			z = turnTo(z, d);
-			this.frame = z;
+		if(city.acycle % 2 == 0 || slowFactor >= 1) {
+			if(slowFactor >= 1 && city.acycle % 2 != 0) slowFactor-=1;
+			if (city.acycle % 3 == 0) {
+				int d = getDir(x, y, destX, destY);
+				z = turnTo(z, d);
+				this.frame = z;
+			}
+			x += CDx[z];
+			y += CDy[z];
 		}
-		x += CDx[z];
-		y += CDy[z];
+		else {
+			slowFactor+=1/(1001-city.hunterEffect);
+		}
 		
 		for (Sprite s : city.allSprites())
 		{

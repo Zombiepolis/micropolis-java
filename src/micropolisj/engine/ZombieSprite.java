@@ -165,8 +165,9 @@ public class ZombieSprite extends Sprite
 			slowFactor=1;
 		}
 		if (c == -1) {
-			//zombie killen
+			//zombie killen und neu spawnen
 			kill();
+			city.makeZombieAt(city.zombiespawn_x,city.zombiespawn_y);
 		}
 
 		for (Sprite s : city.allSprites())

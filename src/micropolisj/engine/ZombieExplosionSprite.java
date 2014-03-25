@@ -34,8 +34,8 @@ public class ZombieExplosionSprite extends Sprite
 	{
 		if (city.acycle % 2 == 0) {
 			if (this.frame == 1) {
-				city.makeSound(x/16, y/16, Sound.EXPLOSION_HIGH);
-				city.sendMessageAt(MicropolisMessage.ZOMBIE_DEATH, x/16, y/16);
+				city.makeSound(x/16, y/16, Sound.EXPLOSION_HIGH); 
+				//city.sendMessageAt(MicropolisMessage.ZOMBIE_DEATH, x/16, y/16);
 			}
 			this.frame++;
 		}
