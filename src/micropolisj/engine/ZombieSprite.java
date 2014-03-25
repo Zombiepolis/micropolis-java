@@ -160,7 +160,7 @@ public class ZombieSprite extends Sprite
 		int c = getChar(x, y);
 		//if(c >= RIVER && c <= LASTRIVEDGE) {
 		//if(c >= 2 && c <= 6 || c == 18 || c == 17 || c == 14 || c == 13) {
-		if(c >= 2 && c <= 4) {
+		if(c >= 2 && c <= 6 || c == 18 || c == 17 || c == 14 || c == 13 || c == 10 || c == 9) {
 			// zombie langsamer machen
 			slowFactor=3;
 			frame=tempframe+16;
