@@ -813,7 +813,10 @@ public class MainWindow extends JFrame
 				onAboutClicked();
 			}
 			}));
+		
 		helpMenu.add(menuItem);
+		
+		
 
 		setJMenuBar(menuBar);
 	}
@@ -959,6 +962,10 @@ public class MainWindow extends JFrame
 				Micropolis newEngine = new Micropolis();
 				newEngine.load(file);
 				setEngine(newEngine);
+				if (newEngine.oldMapLoaded < 0)
+				{
+					oldMapLoaded();
+				}
 				currentFile = file;
 				makeClean();
 			}
@@ -1782,4 +1789,29 @@ public class MainWindow extends JFrame
 			JOptionPane.PLAIN_MESSAGE,
 			appIcon);
 	}
+	
+	private void oldMapLoaded()
+	{
+		String version = getClass().getPackage().getImplementationVersion();
+		String versionStr = MessageFormat.format(strings.getString("main.version_string"), version);
+		versionStr = versionStr.replace("%java.version%", System.getProperty("java.version"));
+		versionStr = versionStr.replace("%java.vendor%", System.getProperty("java.vendor"));
+
+		JLabel appNameLbl = new JLabel(versionStr);
+		JLabel appDetailsLbl = new JLabel(strings.getString("main.oldmap_text"));
+		JComponent [] inputs = new JComponent[] {   appDetailsLbl };
+		JOptionPane.showMessageDialog(this,
+			inputs,
+			strings.getString("main.oldmap_caption"),
+			JOptionPane.PLAIN_MESSAGE,
+			appIcon);
+		
+	}
+	
+	public void oldLoad()
+	{
+		oldMapLoaded();
+	}
+
+
 }

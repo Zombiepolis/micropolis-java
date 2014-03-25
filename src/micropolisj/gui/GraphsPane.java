@@ -329,4 +329,6 @@ public class GraphsPane extends JPanel
 			}
 		}
 	}
+
+	public void oldLoad() { }
 }
