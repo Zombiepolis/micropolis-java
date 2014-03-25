@@ -84,6 +84,7 @@ public class ZombieSprite extends Sprite
 		if (this.frame == 0) {
 			return;
 		}
+		frame=((frame-1) % 16) + 1;
 
 		if (soundCount > 0) {
 			soundCount--;
@@ -159,6 +160,7 @@ public class ZombieSprite extends Sprite
 		if(c==RIVER) {
 			// zombie langsamer machen
 			slowFactor=3;
+			this.frame+=16;
 		}
 		else {
 			// zombie normalschnell machen
@@ -173,9 +175,7 @@ public class ZombieSprite extends Sprite
 		for (Sprite s : city.allSprites())
 		{
 			if (checkSpriteCollision(s) &&
-				(s.kind == SpriteKind.AIR ||
-				 s.kind == SpriteKind.COP ||
-				 s.kind == SpriteKind.SHI ||
+				(s.kind == SpriteKind.SHI ||
 				 s.kind == SpriteKind.TRA ||
 				 s.kind == SpriteKind.GOD)
 				) {
