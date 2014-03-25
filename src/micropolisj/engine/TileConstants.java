@@ -350,9 +350,9 @@ public class TileConstants
 	{
 		assert (tile & LOMASK) == tile;
 
-		if (tile < RESBASE ||
+		if ((tile < RESBASE ||
 			tile > LASTZONE ||
-			isZoneCenter(tile)
+			isZoneCenter(tile)) && (tile < 960 || tile > 968)
 			) {
 			return false;
 		} else {

@@ -31,8 +31,8 @@ public class Micropolis
 	// full size arrays
 	char [][] map;
 	boolean [][] powerMap;
-	
-	public static int zombieKillTotal = 0;
+	private static int zombieKillTotal;
+	private static int lastZombieIncome;
 
 	// half-size arrays
 
@@ -254,6 +254,8 @@ public class Micropolis
 		crimeMem = new int[hY][hX];
 		popDensity = new int[hY][hX];
 		trfDensity = new int[hY][hX];
+		
+		zombieKillTotal = 0;
 
 		int qX = (width+3)/4;
 		int qY = (height+3)/4;
@@ -279,6 +281,18 @@ public class Micropolis
 		zombiespawn_y=height/2;
 	}
 
+	public static int getZombieKillTotal(){
+		return zombieKillTotal;
+	}
+	
+	public static void setZombieKillTotal(int n){
+		zombieKillTotal = n;
+	}
+	
+	public static void addToZombieKillTotal(int n){
+		zombieKillTotal = zombieKillTotal + n;
+	}
+	
 	void fireCensusChanged()
 	{
 		for (Listener l : listeners) {
@@ -1792,10 +1806,14 @@ public class Micropolis
 		lastFireStationCount = fireStationCount;
 		lastPoliceCount = policeCount;
 		lastHunterCount = hunterCount;
+		lastZombieIncome = getZombieKillTotal()*10;
 
 		BudgetNumbers b = generateBudget();
 
 		budget.taxFund += b.taxIncome;
+		budget.zombieIncome += b.zombieIncome;
+		b.zombieIncome = 0;
+		zombieKillTotal = 0;
 		budget.roadFundEscrow -= b.roadFunded;
 		budget.fireFundEscrow -= b.fireFunded;
 		budget.policeFundEscrow -= b.policeFunded;
@@ -1829,13 +1847,11 @@ public class Micropolis
 	void collectTax()
 	{
 		int revenue = budget.taxFund / TAXFREQ;
-		int zombieRevenue = budget.zombieIncome;
 		int expenses = -(budget.roadFundEscrow + budget.fireFundEscrow + budget.policeFundEscrow + budget.hunterFundEscrow) / TAXFREQ;
 
 		FinancialHistory hist = new FinancialHistory();
 		hist.cityTime = cityTime;
 		hist.taxIncome = revenue;
-		hist.zombieIncome = zombieRevenue;
 		hist.operatingExpenses = expenses;
 
 		cashFlow = revenue - expenses;
@@ -1846,6 +1862,7 @@ public class Micropolis
 		financialHistory.add(0,hist);
 
 		budget.taxFund = 0;
+		budget.zombieIncome = 0;
 		budget.roadFundEscrow = 0;
 		budget.fireFundEscrow = 0;
 		budget.policeFundEscrow = 0;
@@ -1876,8 +1893,7 @@ public class Micropolis
 		b.previousBalance = budget.totalFunds;
 		b.taxIncome = (int)Math.round(lastTotalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
 		assert b.taxIncome >= 0;
-		b.zombieIncome = zombieKillTotal*10;
-		zombieKillTotal = 0;
+		b.zombieIncome = getZombieKillTotal()*10; //muss einmal in jahr resetten
 		
 		b.roadRequest = (int)Math.round((lastRoadTotal + lastRailTotal * 2) * RLevels[gameLevel]);
 		b.fireRequest = FIRE_STATION_MAINTENANCE * lastFireStationCount;
@@ -2066,12 +2082,14 @@ public class Micropolis
 		roadPercent = (double)n / 65536.0;
 		n = dis.readInt();                     //62,63... road percent
 		hunterPercent = (double)n / 65536.0;
-
+		
 		for (int i = 66; i < 120; i++)
 		{
 			dis.readShort();
 		}
 
+		
+		
 		if (cityTime < 0) { cityTime = 0; }
 		if (cityTax < 0 || cityTax > 20) { cityTax = 7; }
 		if (gameLevel < 0 || gameLevel > 2) { gameLevel = 0; }
@@ -2129,6 +2147,7 @@ public class Micropolis
 		out.writeInt((int)(hunterPercent * 65536));
 
 		//64
+		
 		for (int i = 66; i < 120; i++) {
 			out.writeShort(0);
 		}
@@ -2770,7 +2789,7 @@ public class Micropolis
 		// if it is a repeat.
 	}
 
-	void sendMessage(MicropolisMessage message)
+	public void sendMessage(MicropolisMessage message)
 	{
 		fireCityMessage(message, null);
 	}

@@ -416,7 +416,7 @@ public class BudgetDialog extends JDialog
 			
 			c1.gridy++;
 			JLabel zombieRevenue = new JLabel();
-			taxIncomeLbl.setText(formatFunds(f.zombieIncome));
+			zombieRevenue.setText(formatFunds(f.zombieIncome));
 			balancePane.add(zombieRevenue, c1);
 
 			c1.gridy++;

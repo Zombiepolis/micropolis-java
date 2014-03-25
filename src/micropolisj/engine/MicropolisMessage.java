@@ -62,7 +62,8 @@ public enum MicropolisMessage
 	ZOMBIE_REVENGE_ATTACK,
 	// added by Jason
 	NO_NUCLEAR_PLANTS,
-	ZOMBIE_DEATH;
+	ZOMBIE_DEATH,
+	ZOMBIE_OUTBREAK;
 	
 
 	/** Whether the message should be displayed in the notification pane. */
