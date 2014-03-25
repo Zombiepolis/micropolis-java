@@ -61,6 +61,9 @@ public class Splashscreen extends JFrame{
 			} catch(IOException e){
 					e.printStackTrace();
 			}
+			
+			ImageIcon appIcon = new ImageIcon(MainWindow.class.getResource("/micropolism.png"));
+			setIconImage(appIcon.getImage());
 
 			jlSplashImage = new JLabel(new ImageIcon(image));
 			jlSplashImage.setBounds(0,0,1000,700);
