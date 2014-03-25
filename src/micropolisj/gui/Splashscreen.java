@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.*;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
@@ -71,7 +72,7 @@ public class Splashscreen extends JFrame{
 
 			panel = new JPanel(null,true);
 			panel.setSize(1000,700);
-			setLocationRelativeTo(null);
+			setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-panel.getWidth()/2,Toolkit.getDefaultToolkit().getScreenSize().height/2-panel.getHeight()/2);
 			getContentPane().add(panel);
 			panel.add(jlSplashImage);
 			
@@ -192,6 +193,7 @@ private class HandlerScenario implements MouseListener{
 							File file = fc.getSelectedFile();
 							Micropolis newEngine = new Micropolis();
 							newEngine.load(file);
+							
 							startPlaying(newEngine, file);
 					}
 					dispose();
@@ -263,6 +265,10 @@ private class HandlerScenario implements MouseListener{
 				MainWindow win = new MainWindow();
 				win.setVisible(true);
 				win.setEngine(newEngine);
+				if (newEngine.oldMapLoaded < 0)
+				{
+					win.oldLoad();
+				}
 				win.currentFile = file;
 				win.makeClean();
 				dispose();

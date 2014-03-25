@@ -307,4 +307,6 @@ public class EvaluationPane extends JPanel
 	{
 		return cstrings.getString("zombs."+zombLevel);
 	}
+
+	public void oldLoad() { }
 }

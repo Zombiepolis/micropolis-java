@@ -4,6 +4,7 @@ public class ZombLevel {
 
 	public static final int MIN_LEVEL = 0;
 	public static final int MAX_LEVEL = 2;
+	public static final int STD_LEVEL = 1;
 
 	public static boolean isValid(int lev)
 	{
