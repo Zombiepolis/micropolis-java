@@ -84,14 +84,15 @@ public class ZombieSprite extends Sprite
 		if (this.frame == 0) {
 			return;
 		}
-		frame=((frame-1) % 16) + 1;
+		int tempframe=frame;
+		if(frame > 16) tempframe-=16;
 
 		if (soundCount > 0) {
 			soundCount--;
 		}
 
-		int d = (this.frame - 1) / 3;   // basic direction
-		int z = (this.frame - 1) % 3;   // step index (only valid for d<4)
+		int d = (tempframe - 1) / 3;   // basic direction
+		int z = (tempframe - 1) % 3;   // step index (only valid for d<4)
 
 		if (d < 4) { //turn n s e w
 			assert step == -1 || step == 1;
@@ -120,9 +121,9 @@ public class ZombieSprite extends Sprite
 			}
 		}
 		else {
-			assert this.frame >= 13 && this.frame <= 16;
+			assert tempframe >= 13 && tempframe <= 16;
 
-			int z2 = (this.frame - 13) % 4;
+			int z2 = (tempframe - 13) % 4;
 
 			if (city.PRNG.nextInt(4) == 0) {
 				int newFrame;
@@ -142,9 +143,9 @@ public class ZombieSprite extends Sprite
 		}
 
 		if(this.count % slowFactor == 0) {
-			this.frame = ((d * 3) + z) + 1;
+			tempframe = ((d * 3) + z) + 1;
 
-			assert this.frame >= 1 && this.frame <= 16;
+			assert tempframe >= 1 && tempframe <= 16;
 
 			this.x += Gx[d];
 			this.y += Gy[d];
@@ -157,14 +158,16 @@ public class ZombieSprite extends Sprite
 		if(this.count % 250 == 0 && city.zombie_cat_counter < 20) city.zombie_cat_counter++; 
 
 		int c = getChar(x, y);
-		if(c==RIVER) {
+		if(c >= RIVER && c <= LASTRIVEDGE) {
 			// zombie langsamer machen
 			slowFactor=3;
-			this.frame+=16;
+			frame=tempframe+16;
 		}
 		else {
 			// zombie normalschnell machen
 			slowFactor=1;
+			frame=tempframe;
+			//JOptionPane.showMessageDialog(null,"zombie ist NICHT im wasser");
 		}
 		if (c == -1) {
 			//zombie killen und neu spawnen
