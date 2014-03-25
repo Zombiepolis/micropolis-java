@@ -38,13 +38,11 @@ public class Splashscreen extends JFrame{
 	JPanel panel;
 	JPanel panelNewGame;
 	JPanel panelLoad;
-	JPanel panelScenario;
 	JPanel panelLeave;
 	BufferedImage image;
 	JLabel jlSplashImage;
 	JLabel jlStartNewGame;
-	JLabel jlLoadCity;
-	JLabel jlScenario;
+	JLabel jlLoadCity; 
 	JLabel jlLeaveGame;
 
 
@@ -56,8 +54,7 @@ public class Splashscreen extends JFrame{
 					image = ImageIO.read(new File("graphics/splash.png"));
 					jlStartNewGame = new JLabel(new ImageIcon(ImageIO.read(new File("graphics/splash_1.png"))));
 					jlLoadCity = new JLabel(new ImageIcon(ImageIO.read(new File("graphics/splash_2.png"))));
-					jlScenario = new JLabel(new ImageIcon(ImageIO.read(new File("graphics/splash_3.png"))));
-					jlLeaveGame = new JLabel(new ImageIcon(ImageIO.read(new File("graphics/splash_4.png"))));	
+					jlLeaveGame = new JLabel(new ImageIcon(ImageIO.read(new File("graphics/splash_3.png"))));	
 			} catch(IOException e){
 					e.printStackTrace();
 			}
@@ -69,7 +66,6 @@ public class Splashscreen extends JFrame{
 			jlSplashImage.setBounds(0,0,1000,700);
 			jlStartNewGame.setBounds(0,0,1000,700);
 			jlLoadCity.setBounds(0,0,1000,700);
-			jlScenario.setBounds(0,0,1000,700);
 			jlLeaveGame.setBounds(0,0,1000,700);
 
 
@@ -80,25 +76,19 @@ public class Splashscreen extends JFrame{
 			panel.add(jlSplashImage);
 			
 			panelNewGame = new JPanel(null,true);
-			panelNewGame.setBounds(270,520,270,60);
+			panelNewGame.setBounds(430,440,260,130);
 			HandlerNewGame handlerng = new HandlerNewGame();
 			panelNewGame.addMouseListener(handlerng);
 			panel.add(panelNewGame);
 			
 			panelLoad = new JPanel(null,true);
-			panelLoad.setBounds(40,600,300,60);
+			panelLoad.setBounds(120,580,300,110);
 			HandlerLoad handlerl = new HandlerLoad();
 			panelLoad.addMouseListener(handlerl);
 			panel.add(panelLoad);
-
-			panelScenario = new JPanel(null,true);
-			panelScenario.setBounds(620,590,220,70);
-			HandlerScenario handlers = new HandlerScenario();
-			panelScenario.addMouseListener(handlers);
-			panel.add(panelScenario);
 			
 			panelLeave = new JPanel(null,true);
-			panelLeave.setBounds(790,460,200,120);
+			panelLeave.setBounds(730,500,180,150);
 			HandlerLeave handlerle = new HandlerLeave();
 			panelLeave.addMouseListener(handlerle);
 			panel.add(panelLeave);
@@ -183,53 +173,6 @@ private class HandlerLoad implements MouseListener{
 	}
 }
 
-private class HandlerScenario implements MouseListener{
-		public void mouseClicked(MouseEvent event){
-			try
-			{	
-					JFileChooser fc = new JFileChooser();
-					FileNameExtensionFilter filter1 = new FileNameExtensionFilter(strings.getString("cty_file"), EXTENSION);
-					fc.setFileFilter(filter1);
-
-					int rv = fc.showOpenDialog(Splashscreen.this);
-					if (rv == JFileChooser.APPROVE_OPTION) {
-							File file = fc.getSelectedFile();
-							Micropolis newEngine = new Micropolis();
-							newEngine.load(file);
-							
-							startPlaying(newEngine, file);
-					}
-					dispose();
-			}
-			catch (Exception e)
-			{
-					e.printStackTrace(System.err);
-					JOptionPane.showMessageDialog(Splashscreen.this, e, strings.getString("main.error_caption"),
-							JOptionPane.ERROR_MESSAGE);
-			}
-		}
-		public void mousePressed(MouseEvent event){
-		
-		}
-		public void mouseReleased(MouseEvent event){
-		
-		}
-		public void mouseEntered(MouseEvent event){
-				panel.remove(jlSplashImage);
-				removeBackgroundPanels();
-				panel.add(jlScenario);
-				addBackgroundPanels();
-				panel.repaint();
-		}
-		public void mouseExited(MouseEvent event){
-				panel.remove(jlScenario);
-				removeBackgroundPanels();
-				panel.add(jlSplashImage);
-				addBackgroundPanels();
-				panel.repaint();
-		}
-	}
-
 	private class HandlerLeave implements MouseListener{
 			public void mouseClicked(MouseEvent event){
 				System.exit(0);
@@ -280,14 +223,12 @@ private class HandlerScenario implements MouseListener{
 		private void removeBackgroundPanels(){
 				panel.remove(panelNewGame);
 				panel.remove(panelLoad);
-				panel.remove(panelScenario);
 				panel.remove(panelLeave);
 				
 		}
 		private void addBackgroundPanels(){
 				panel.add(panelNewGame);
 				panel.add(panelLoad);
-				panel.add(panelScenario);
 				panel.add(panelLeave);
 		}
 
