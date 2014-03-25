@@ -29,6 +29,7 @@ public class BudgetDialog extends JDialog
 	double origFirePct;
 	double origPolicePct;
 	double origHunterPct;
+	double origZombieIncome;
 
 	JLabel roadFundRequest = new JLabel();
 	JLabel roadFundAlloc = new JLabel();
@@ -47,6 +48,7 @@ public class BudgetDialog extends JDialog
 	JSlider hunterFundEntry;
 
 	JLabel taxRevenueLbl = new JLabel();
+	JLabel zombieRevenue = new JLabel();
 
 	static ResourceBundle strings = MainWindow.strings;
 
@@ -83,6 +85,8 @@ public class BudgetDialog extends JDialog
 		}
 
 		taxRevenueLbl.setText(formatFunds(b.taxIncome));
+		
+		zombieRevenue.setText(formatFunds(b.zombieIncome));
 
 		roadFundRequest.setText(formatFunds(b.roadRequest));
 		roadFundAlloc.setText(formatFunds(b.roadFunded));
@@ -313,6 +317,8 @@ public class BudgetDialog extends JDialog
 		pane.add(new JLabel(strings.getString("budgetdlg.tax_revenue")), c0);
 		pane.add(taxRateEntry, c1);
 		pane.add(taxRevenueLbl, c2);
+		//pane.add(new JLabel (strings.getString("budgetdlg.zombie_revenue")), c0);
+		//pane.add(zombieRevenue, c2);
 
 		return pane;
 	}
@@ -367,6 +373,8 @@ public class BudgetDialog extends JDialog
 		c0.gridy++;
 		balancePane.add(new JLabel(strings.getString("budgetdlg.taxes_collected")), c0);
 		c0.gridy++;
+		balancePane.add(new JLabel(strings.getString("budgetdlg.zombie_revenue")), c0);
+		c0.gridy++;
 		balancePane.add(new JLabel(strings.getString("budgetdlg.capital_expenses")), c0);
 		c0.gridy++;
 		balancePane.add(new JLabel(strings.getString("budgetdlg.operating_expenses")), c0);
@@ -386,7 +394,7 @@ public class BudgetDialog extends JDialog
 			Micropolis.FinancialHistory f = engine.financialHistory.get(i);
 			Micropolis.FinancialHistory fPrior = engine.financialHistory.get(i+1);
 			int cashFlow = f.totalFunds - fPrior.totalFunds;
-			int capExpenses = -(cashFlow - f.taxIncome + f.operatingExpenses);
+			int capExpenses = -(cashFlow - f.taxIncome - f.zombieIncome + f.operatingExpenses);
 
 			c1.gridx++;
 			c1.gridy = 0;
@@ -405,6 +413,11 @@ public class BudgetDialog extends JDialog
 			JLabel taxIncomeLbl = new JLabel();
 			taxIncomeLbl.setText(formatFunds(f.taxIncome));
 			balancePane.add(taxIncomeLbl, c1);
+			
+			c1.gridy++;
+			JLabel zombieRevenue = new JLabel();
+			zombieRevenue.setText(formatFunds(f.zombieIncome));
+			balancePane.add(zombieRevenue, c1);
 
 			c1.gridy++;
 			JLabel capExpensesLbl = new JLabel();

@@ -104,29 +104,32 @@ public class MapGenerator
 		{
 			doRivers();
 		}
-
+	
 		if (lakeLevel != 0)
 		{
 			makeLakes();
 		}
 
+		setCemetery();	
+		
 		smoothRiver();
-
+		
 		if (treeLevel != 0)
 		{
 			doTrees();
 		}
 		
-		setCemetery();
+
 		
 	}
 
 	private void makeIsland()
 	{
 		makeNakedIsland();
+
+		setCemetery();
 		smoothRiver();
 		doTrees();
-		setCemetery();
 	}
 
 	private int erand(int limit)
@@ -548,13 +551,30 @@ public class MapGenerator
 	}
 	
 	static final char [][] CMatrix = new char[][] {
-			{ 969, 970, 971, 972, 973, 974 },
-			{ 975, 976, 977, 978, 979, 980 },
-			{ 981, 982, 983, 984, 985, 986 },
-			{ 987, 988, 989, 990, 991, 992 },
-			{ 993, 994, 995, 996, 997, 998 },
-			{ 999, 1000, 1001, 1002, 1003, 1004 }
-			};
+		{ 3, 13, 13, 13, 13, 13, 13, 3 },
+		{ 9, 969, 970, 971, 972, 973, 974, 17 },
+		{ 9, 975, 976, 977, 978, 979, 980, 17 },
+		{ 9, 981, 982, 983, 984, 985, 986, 17 },
+		{ 9, 987, 988, 989, 990, 991, 992, 17 },
+		{ 9, 993, 994, 995, 996, 997, 998, 17 },
+		{ 9, 999, 1000, 1001, 1002, 1003, 1004, 17 },
+		{ 3, 5, 5, 5, 5, 5, 5, 3 }
+		};
+
+	static final char [][] CIMatrix = new char[][] {
+		{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 },
+		{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 },
+		{ 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3 },
+		{ 3, 3, 0, 969, 970, 971, 972, 973, 974, 0, 3, 3 },
+		{ 3, 3, 0, 975, 976, 977, 978, 979, 980, 0, 3, 3 },
+		{ 3, 3, 0, 981, 982, 983, 984, 985, 986, 0, 3, 3 },
+		{ 3, 3, 0, 987, 988, 989, 990, 991, 992, 0, 3, 3 },
+		{ 3, 3, 0, 993, 994, 995, 996, 997, 998, 0, 3, 3 },
+		{ 3, 3, 0, 999, 1000, 1001, 1002, 1003, 1004, 0, 3, 3 },
+		{ 3, 3, 3, 0, 0, 0, 0, 0, 0, 3, 3, 3 },
+		{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 },
+		{ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 }
+		};
 	
 	private void setCemetery()
 	{
@@ -564,83 +584,107 @@ public class MapGenerator
 		int x_centre = (int) Math.floor(X_WORLD/2);
 		int y_centre = (int) Math.floor(Y_WORLD/2);
 		
-		//x_centre += PRNG.nextInt(X_WORLD/10);
-		//y_centre += PRNG.nextInt(Y_WORLD/10);
-		
-		//in alle Richtungen vergleichen
-		
 		boolean setable;
 		int plusMinusX;
 		int plusMinusY;
-		
-		int x_tmp;
-		int y_tmp;
+		int cemAlcatraz = 0;
 		
 		do
 		{
 			setable = true;
+			
 			do
 			{
 				plusMinusX = PRNG.nextInt(2);
 				if (plusMinusX == 0)
 				{
-					x_tmp = x_centre + PRNG.nextInt(X_WORLD/10);
+					x_centre += PRNG.nextInt(X_WORLD/10);
 				} else {
-					x_tmp = x_centre - PRNG.nextInt(X_WORLD/10);
+					x_centre -= PRNG.nextInt(X_WORLD/10);
 				}
-			} while ( ( (5 >= x_tmp) || (x_tmp >= X_WORLD - 10) ) );
-			
-			x_centre = x_tmp;
+			} while ( ( (5 >= x_centre) || (x_centre >= X_WORLD - 12) ) );
 			
 			do
 			{
 				plusMinusY = PRNG.nextInt(2);
 				if (plusMinusY == 0)
 				{
-					y_tmp = y_centre + PRNG.nextInt(Y_WORLD/10);
+					y_centre += PRNG.nextInt(Y_WORLD/10);
 				} else {
-					y_tmp = y_centre - PRNG.nextInt(Y_WORLD/10);
+					y_centre -= PRNG.nextInt(Y_WORLD/10);
 				}
-			} while ( ( (5 >= y_tmp) || (y_tmp >= Y_WORLD - 10) ) );
-			
-			y_centre = y_tmp;
-						
-			for (int x_comp = -1; x_comp < 5; x_comp++)
+			} while ( ( (5 >= y_centre) || (y_centre >= Y_WORLD - 10) ) );
+
+			if ((x_centre < 91) && (y_centre < 91))
 			{
-				for (int y_comp = -1; y_comp < 5; y_comp++)
+				char chTmp = map[y_centre][x_centre];
+				if ( (chTmp ==  RIVER) || (chTmp == REDGE) || (chTmp == CHANNEL) )
 				{
-					if ((x_centre + x_comp < 100) && (y_centre + y_comp < 100))
-					{
-						if ( ((map[x_centre + x_comp][y_centre + y_comp] & LOMASK) == RIVER) || ((map[x_centre + x_comp][y_centre + y_comp] & LOMASK) == REDGE) || ((map[x_centre + x_comp][y_centre + y_comp] & LOMASK) == CHANNEL) )
-							//  || ((map[x_centre +x_comp][y_centre +y_comp] & LOMASK) == RIVEDGE) || ((map[x_centre +x_comp][y_centre +y_comp] & LOMASK) == FIRSTRIVEDGE) || ((map[x_centre +x_comp][y_centre +y_comp] & LOMASK) == LASTRIVEDGE)
-						{
-							setable = false;
-						}
-					} else {
-						setable = false;
-					}
+					cemAlcatraz = 1;
+				} else {
+					cemAlcatraz = 0;
 				}
+			} else {
+				setable = false;
 			}
 		} while (setable == false);
 		
-		for (int x = -1; x < 5; x++)
+		if (cemAlcatraz == 0) {
+			setCemLand(x_centre, y_centre);
+		} else {
+			setCemWater(x_centre, y_centre);
+		}
+		
+		
+	}
+	
+	private void setCemLand(int xplace, int yplace)
+	{
+		for (int x = 0; x < 8; x++)
 		{
-			for (int y = -1; y < 5; y++)
+			for (int y = 0; y < 8; y++)
 			{
 				
-				int xloc = x_centre + x;
-				int yloc = y_centre + y;
+				int xloc = xplace + x;
+				int yloc = yplace + y;
+
+				if (!engine.testBounds(xloc, yloc))
+					return; 
+						
+				char tmp = map[yloc][xloc];
+								
+				if ((x == 0 || x == 7) || (y == 0 || y == 7))
+				{
+					if ( (tmp == DIRT) )
+					{
+						map[yloc][xloc] = DIRT;
+					} else {							
+						map[yloc][xloc] = CMatrix[y][x];
+					}
+				} else {
+					map[yloc][xloc] = CMatrix[y][x];
+				}				
+			}
+		}
+	}
+	
+	private void setCemWater(int xplace, int yplace)
+	{
+		for (int x = 0; x < 12; x++)
+		{
+			for (int y = 0; y < 12; y++)
+			{
+				int xloc = xplace + x;
+				int yloc = yplace + y;
 
 				if (!engine.testBounds(xloc, yloc))
 					return;
 
-				char tmp = CMatrix[y+1][x+1];
+				char tmp = CIMatrix[y][x];
 				
 					tmp &= LOMASK;
 					
-				map[yloc][xloc] = tmp;
-				
-				
+				map[yloc][xloc] = tmp;		
 			}
 		}
 	}

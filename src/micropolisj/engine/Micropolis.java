@@ -31,6 +31,8 @@ public class Micropolis
 	// full size arrays
 	char [][] map;
 	boolean [][] powerMap;
+	private static int zombieKillTotal;
+	private static int lastZombieIncome;
 
 	// half-size arrays
 
@@ -216,7 +218,7 @@ public class Micropolis
 	public int zombiespawn_x;
 	public int zombiespawn_y;
 
-	// wenn der counter 0 erreicht, wird die katastrophe ausgelöst. dies soll das einmauern der zombies bestrafen. 
+	// wenn der counter 0 erreicht, wird die katastrophe ausgeloest. dies soll das einmauern der zombies bestrafen. 
 	public int zombie_cat_counter = 10;
 	
 	
@@ -252,6 +254,8 @@ public class Micropolis
 		crimeMem = new int[hY][hX];
 		popDensity = new int[hY][hX];
 		trfDensity = new int[hY][hX];
+		
+		zombieKillTotal = 0;
 
 		int qX = (width+3)/4;
 		int qY = (height+3)/4;
@@ -277,6 +281,18 @@ public class Micropolis
 		zombiespawn_y=height/2;
 	}
 
+	public static int getZombieKillTotal(){
+		return zombieKillTotal;
+	}
+	
+	public static void setZombieKillTotal(int n){
+		zombieKillTotal = n;
+	}
+	
+	public static void addToZombieKillTotal(int n){
+		zombieKillTotal = zombieKillTotal + n;
+	}
+	
 	void fireCensusChanged()
 	{
 		for (Listener l : listeners) {
@@ -656,6 +672,7 @@ public class Micropolis
 
 		case 13:
 			crimeScan();
+			hunterScan();
 			break;
 
 		case 14:
@@ -847,6 +864,22 @@ public class Micropolis
 				}
 			}
 		}
+	}
+	
+	/**
+	 * extrahiert die Abdeckung durch Hunter aus der Map und uebertraegt sie auf die
+	 * hunter-overlay-Karte.
+	 * hunterScan() wird in der Simulation gemeinsam mit crimeScan() aufgerufen.
+	 * @see simulate()  
+	 */
+	void hunterScan(){
+		for (int sy = 0; sy < hunterMap.length; sy++) {
+			for (int sx = 0; sx < hunterMap[sy].length; sx++) {
+				hunterMapEffect[sy][sx] = hunterMap[sy][sx];
+			}
+		}
+		
+		fireMapOverlayDataChanged(MapState.HUNTER_OVERLAY);
 	}
 
 	void crimeScan()
@@ -1773,10 +1806,14 @@ public class Micropolis
 		lastFireStationCount = fireStationCount;
 		lastPoliceCount = policeCount;
 		lastHunterCount = hunterCount;
+		lastZombieIncome = getZombieKillTotal()*10;
 
 		BudgetNumbers b = generateBudget();
 
 		budget.taxFund += b.taxIncome;
+		budget.zombieIncome += b.zombieIncome;
+		b.zombieIncome = 0;
+		zombieKillTotal = 0;
 		budget.roadFundEscrow -= b.roadFunded;
 		budget.fireFundEscrow -= b.fireFunded;
 		budget.policeFundEscrow -= b.policeFunded;
@@ -1802,6 +1839,7 @@ public class Micropolis
 		public int cityTime;
 		public int totalFunds;
 		public int taxIncome;
+		public int zombieIncome;
 		public int operatingExpenses;
 	}
 	public ArrayList<FinancialHistory> financialHistory = new ArrayList<FinancialHistory>();
@@ -1820,14 +1858,17 @@ public class Micropolis
 		spend(-cashFlow);
 
 		hist.totalFunds = budget.totalFunds;
+		hist.zombieIncome = budget.zombieIncome;
 		financialHistory.add(0,hist);
 
 		budget.taxFund = 0;
+		budget.zombieIncome = 0;
 		budget.roadFundEscrow = 0;
 		budget.fireFundEscrow = 0;
 		budget.policeFundEscrow = 0;
 		budget.hunterFundEscrow = 0;
 	}
+	
 
 	/** Annual maintenance cost of each police station. */
 	static final int POLICE_STATION_MAINTENANCE = 100;
@@ -1852,7 +1893,8 @@ public class Micropolis
 		b.previousBalance = budget.totalFunds;
 		b.taxIncome = (int)Math.round(lastTotalPop * landValueAverage / 120 * b.taxRate * FLevels[gameLevel]);
 		assert b.taxIncome >= 0;
-
+		b.zombieIncome = getZombieKillTotal()*10; //muss einmal in jahr resetten
+		
 		b.roadRequest = (int)Math.round((lastRoadTotal + lastRailTotal * 2) * RLevels[gameLevel]);
 		b.fireRequest = FIRE_STATION_MAINTENANCE * lastFireStationCount;
 		b.policeRequest = POLICE_STATION_MAINTENANCE * lastPoliceCount;
@@ -1863,7 +1905,7 @@ public class Micropolis
 		b.policeFunded = (int)Math.round(b.policeRequest * b.policePercent);
 		b.hunterFunded = (int)Math.round(b.hunterRequest * b.hunterPercent);
 
-		int yumDuckets = budget.totalFunds + b.taxIncome;
+		int yumDuckets = budget.totalFunds + b.taxIncome + b.zombieIncome;
 		assert yumDuckets >= 0;
 		
 		if (yumDuckets >= b.hunterFunded)
@@ -1925,8 +1967,8 @@ public class Micropolis
 		}
 
 		b.operatingExpenses = b.roadFunded + b.fireFunded + b.policeFunded + b.hunterFunded;
-		b.newBalance = b.previousBalance + b.taxIncome - b.operatingExpenses;
-
+		b.newBalance = b.previousBalance + b.taxIncome + b.zombieIncome - b.operatingExpenses;
+		
 		return b;
 	}
 
@@ -2040,12 +2082,14 @@ public class Micropolis
 		roadPercent = (double)n / 65536.0;
 		n = dis.readInt();                     //62,63... road percent
 		hunterPercent = (double)n / 65536.0;
-
-		for (int i = 64; i < 120; i++)
+		
+		for (int i = 66; i < 120; i++)
 		{
 			dis.readShort();
 		}
 
+		
+		
 		if (cityTime < 0) { cityTime = 0; }
 		if (cityTax < 0 || cityTax > 20) { cityTax = 7; }
 		if (gameLevel < 0 || gameLevel > 2) { gameLevel = 0; }
@@ -2103,7 +2147,8 @@ public class Micropolis
 		out.writeInt((int)(hunterPercent * 65536));
 
 		//64
-		for (int i = 64; i < 120; i++) {
+		
+		for (int i = 66; i < 120; i++) {
 			out.writeShort(0);
 		}
 	}
@@ -2515,21 +2560,6 @@ public class Micropolis
 		assert dim.height >= 3;
 
 		int zoneBase = (zoneTile&LOMASK) - 1 - dim.width;
-		
-		//kills zombie hunter, if this tile had a zombie hunter base on it: geht noch nicht
-		/*if (isHunterHouse(zoneTile)){
-			
-			ArrayList<Sprite> hunter_sprites = this.city.getAllSprites(SpriteKind.HUN);
-			
-			int i = 0;
-			HunterSprite hunter = (HunterSprite) hunter_sprites.get(i);
-			
-			while ((!(hunter.getOrigX() == xpos && hunter.getOrigY() == ypos)) && i < hunter_sprites.size()){
-				hunter = (HunterSprite) hunter_sprites.get(i);
-				i++;
-			}
-			hunter.explodeSprite();
-		}*/
 
 		// this will take care of stopping smoke animations
 		shutdownZone(xpos, ypos, dim);
@@ -2759,7 +2789,7 @@ public class Micropolis
 		// if it is a repeat.
 	}
 
-	void sendMessage(MicropolisMessage message)
+	public void sendMessage(MicropolisMessage message)
 	{
 		fireCityMessage(message, null);
 	}
@@ -2829,10 +2859,11 @@ public class Micropolis
 	public int getZombLevel(){
 		return zombLevel;
 	}
-	
 
 	public void setFunds(int totalFunds)
 	{
 		budget.totalFunds = totalFunds;
 	}
+	
+	
 }
