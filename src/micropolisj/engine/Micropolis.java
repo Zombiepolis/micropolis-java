@@ -220,6 +220,7 @@ public class Micropolis
 
 	// wenn der counter 0 erreicht, wird die katastrophe ausgeloest. dies soll das einmauern der zombies bestrafen. 
 	public int zombie_cat_counter = 10;
+	public long lastZombieInvasion = 0;
 	
 	
 	public void spend(int amount)
@@ -2471,8 +2472,11 @@ public class Micropolis
 		if(zombieCount < 70) {
 			sprites.add(new ZombieSprite(this, xpos, ypos));
 			zombieCount++;
-			if (zombieCount == 20) {
+			// gib die invasionsnachricht nur aus, wenn die letzte invasionsnachricht mindestens 2 minuten her ist
+			if (zombieCount == 20 && System.currentTimeMillis()-lastZombieInvasion > 120000) {
+				lastZombieInvasion=System.currentTimeMillis();
 				makeSound(xpos, ypos, Sound.MONSTER);
+				
 				sendMessageAt(MicropolisMessage.ZOMBIE_INVASION, xpos,ypos);
 			}
 		}

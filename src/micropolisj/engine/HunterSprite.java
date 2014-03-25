@@ -104,8 +104,11 @@ public class HunterSprite extends Sprite {
 			}
 			
 		int z = this.frame;
-		if(city.acycle % 2 == 0 || slowFactor >= 1) {
-			if(slowFactor >= 1 && city.acycle % 2 != 0) slowFactor-=1;
+		
+		slowFactor+=(double)(city.hunterEffect)/1000;
+		
+		if(slowFactor >= 1) {
+			slowFactor=slowFactor % 1;
 			if (city.acycle % 3 == 0) {
 				int d = getDir(x, y, destX, destY);
 				z = turnTo(z, d);
@@ -113,9 +116,6 @@ public class HunterSprite extends Sprite {
 			}
 			x += CDx[z];
 			y += CDy[z];
-		}
-		else {
-			slowFactor+=1/(1001-city.hunterEffect);
 		}
 		
 		for (Sprite s : city.allSprites())
