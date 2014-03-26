@@ -23,7 +23,7 @@ public class GameLevel
 		switch (lev) {
 		case 0: return 20000;
 		case 1: return 10000;
-		case 2: return 5000;
+		case 2: return 7000;
 		default:
 			throw new Error("unexpected game level: "+lev);
 		}
