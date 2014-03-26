@@ -1746,7 +1746,7 @@ public class Micropolis
 		if (moneyScaled > 255)
 			moneyScaled = 255;
 		history.money[0] = moneyScaled;
-		history.zombies[0] = zombieCount;
+		history.zombies[0] = zombieCount*2;
 
 		history.cityTime = cityTime;
 
@@ -2114,6 +2114,7 @@ public class Micropolis
 				zombLevel = 1;
 			}
 		}
+		
 
 		for (int i = 70; i < 120; i++)
 
@@ -2322,7 +2323,6 @@ public class Micropolis
 		loadHistoryArray(history.crime, dis);
 		loadHistoryArray(history.pollution, dis);
 		loadHistoryArray(history.money, dis);
-		loadHistoryArray(history.zombies, dis);
 		loadMisc(dis);
 		loadMap(dis);
 		dis.close();
@@ -2352,7 +2352,6 @@ public class Micropolis
 		writeHistoryArray(history.crime, out);
 		writeHistoryArray(history.pollution, out);
 		writeHistoryArray(history.money, out);
-		writeHistoryArray(history.zombies, out);
 		writeMisc(out);
 		writeMap(out);
 		out.close();

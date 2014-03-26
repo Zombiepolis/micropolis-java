@@ -209,7 +209,7 @@ public class GraphsPane extends JPanel
 		case MONEY: return engine.history.money[pos];
 		case CRIME: return engine.history.crime[pos];
 		case POLLUTION: return engine.history.pollution[pos];
-		case ZOMBIES: return engine.history.pollution[pos];
+		case ZOMBIES: return engine.history.zombies[pos];
 
 		default: throw new Error("unexpected");
 		}
