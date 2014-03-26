@@ -27,4 +27,6 @@ public class ZoneStatus
 	public int pollution;
 	/** Number from 17 to 20, 17=Declining, 18=Stable, etc. */
 	public int growthRate;
+	/** Number from 21 to 23, 21=Endangered, 22=May be..., 23=Covered */
+	public int hunterCover;
 }

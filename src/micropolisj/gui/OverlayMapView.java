@@ -149,6 +149,20 @@ public class OverlayMapView extends JComponent
 			return null;
 	}
 
+	private Color getCI_hun(int x)
+	{
+		if (x == 1000)
+			return VAL_VERYHIGH;
+		else if (x == 750)
+			return VAL_HIGH;
+		else if (x == 500)
+			return VAL_MEDIUM;
+		else if (x == 250)
+			return VAL_LOW;
+		else
+			return null;
+	}
+
 	private void drawPollutionMap(Graphics gr)
 	{
 		int [][] A = engine.pollutionMem;
@@ -221,7 +235,7 @@ public class OverlayMapView extends JComponent
 
 		for (int y = 0; y < A.length; y++) {
 			for (int x = 0; x < A[y].length; x++) {
-				maybeDrawRect(gr, getCI(A[y][x]),x*24,y*24,24,24);
+				maybeDrawRect(gr, getCI_hun(A[y][x]),x*3,y*3,3,3);
 			}
 		}
 	}

@@ -251,6 +251,8 @@ public class Micropolis
 	{
 		map = new char[height][width];
 		powerMap = new boolean[height][width];
+		hunterMap = new int [height][width];
+		hunterMapEffect = new int[height][width];
 
 		int hX = (width+1)/2;
 		int hY = (height+1)/2;
@@ -277,8 +279,7 @@ public class Micropolis
 		policeMapEffect = new int[smY][smX];
 		fireRate = new int[smY][smX];
 		comRate = new int[smY][smX];
-		hunterMap = new int [smY][smX];
-		hunterMapEffect = new int[smY][smX];
+		
 
 		centerMassX = hX;
 		centerMassY = hY;
@@ -586,11 +587,16 @@ public class Micropolis
 		airportCount = 0;
 		powerPlants.clear();
 
+		for (int y = 0; y < hunterMap.length; y++) {
+			for (int x = 0; x < hunterMap[y].length; x++) {
+				hunterMap[y][x] = 0;
+			}
+		}
+
 		for (int y = 0; y < fireStMap.length; y++) {
 			for (int x = 0; x < fireStMap[y].length; x++) {
 				fireStMap[y][x] = 0;
 				policeMap[y][x] = 0;
-				hunterMap[y][x] = 0;
 			}
 		}
 	}
@@ -888,14 +894,49 @@ public class Micropolis
 	 * @see simulate()  
 	 */
 	void hunterScan(){
+		//0 -> kein haus //500 -> haus ohne Strom //1000 -> haus mit strom //250 <- randzone ohne strom //750 <- randzone mit strom
+		
 		for (int sy = 0; sy < hunterMap.length; sy++) {
 			for (int sx = 0; sx < hunterMap[sy].length; sx++) {
-				hunterMapEffect[sy][sx] = hunterMap[sy][sx];
+				if (hunterMap[sy][sx] == 500)
+				{
+					hunterMEradius(sy, sx, 1);
+				} else if (hunterMap[sy][sx] == 1000) {
+					hunterMEradius(sy, sx, 2);
+				} else if (hunterMapEffect[sy][sx] != 0){
+				} else {
+					hunterMapEffect[sy][sx] = hunterMap[sy][sx];
+				}
 			}
 		}
 		
 		fireMapOverlayDataChanged(MapState.HUNTER_OVERLAY);
 	}
+
+	private void hunterMEradius(int ypos, int xpos, int i)
+	{
+		for (int y = -5; y <= 5; y++) {
+			for (int x = -5; x <= 5; x++) {
+				int distance = Math.abs(x) + Math.abs(y);
+				if (xpos + x < 0 || ypos + y < 0 || xpos + x >= hunterMap[ypos].length || ypos + y >= hunterMap.length)
+				{
+				} else if ( distance == 5 && i == 1 )
+				{
+					hunterMapEffect[ypos + y][xpos + x] = 250;
+				} else if ( distance == 5 && i == 2 )
+				{	
+					hunterMapEffect[ypos + y][xpos + x] = 750;
+				} else if ( distance < 5 && i == 1 )
+				{
+					hunterMapEffect[ypos + y][xpos + x] = 500;
+				} else if  ( distance < 5 && i == 2 )
+				{
+					hunterMapEffect[ypos + y][xpos + x] = 1000;
+				}
+			}
+		}
+	}
+
 
 	void crimeScan()
 	{
@@ -2904,6 +2945,11 @@ public class Micropolis
 		z = rateOGMem[ypos/8][xpos/8];
 		z = z < 0 ? 16 : z == 0 ? 17 : z <= 100 ? 18 : 19;
 		zs.growthRate = z + 1;
+
+		z = hunterMapEffect[ypos][xpos];
+		z = z / 250;
+		z = z < 1 ? 0 : z < 3 ? 1 : 2;
+		zs.hunterCover = z + 21;
 
 		return zs;
 	}
