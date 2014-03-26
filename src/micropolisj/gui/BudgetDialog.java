@@ -29,7 +29,6 @@ public class BudgetDialog extends JDialog
 	double origFirePct;
 	double origPolicePct;
 	double origHunterPct;
-	double origZombieIncome;
 
 	JLabel roadFundRequest = new JLabel();
 	JLabel roadFundAlloc = new JLabel();
@@ -48,7 +47,8 @@ public class BudgetDialog extends JDialog
 	JSlider hunterFundEntry;
 
 	JLabel taxRevenueLbl = new JLabel();
-	JLabel zombieRevenue = new JLabel();
+	
+	JLabel zombieRevenueLbl = new JLabel();
 
 	static ResourceBundle strings = MainWindow.strings;
 
@@ -86,7 +86,7 @@ public class BudgetDialog extends JDialog
 
 		taxRevenueLbl.setText(formatFunds(b.taxIncome));
 		
-		zombieRevenue.setText(formatFunds(b.zombieIncome));
+		zombieRevenueLbl.setText(formatFunds(b.zombieIncome));
 
 		roadFundRequest.setText(formatFunds(b.roadRequest));
 		roadFundAlloc.setText(formatFunds(b.roadFunded));
@@ -235,7 +235,6 @@ public class BudgetDialog extends JDialog
 		c4.weightx = 0.5;
 		c4.anchor = GridBagConstraints.EAST;
 
-
 		c1.gridy = c2.gridy = c3.gridy = c4.gridy = 0;
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.funding_level_hdr")), c1);
 		fundingRatesPane.add(new JLabel(strings.getString("budgetdlg.requested_hdr")), c2);
@@ -317,8 +316,6 @@ public class BudgetDialog extends JDialog
 		pane.add(new JLabel(strings.getString("budgetdlg.tax_revenue")), c0);
 		pane.add(taxRateEntry, c1);
 		pane.add(taxRevenueLbl, c2);
-		//pane.add(new JLabel (strings.getString("budgetdlg.zombie_revenue")), c0);
-		//pane.add(zombieRevenue, c2);
 
 		return pane;
 	}
@@ -415,9 +412,9 @@ public class BudgetDialog extends JDialog
 			balancePane.add(taxIncomeLbl, c1);
 			
 			c1.gridy++;
-			JLabel zombieRevenue = new JLabel();
-			zombieRevenue.setText(formatFunds(f.zombieIncome));
-			balancePane.add(zombieRevenue, c1);
+			JLabel zombieIncomeLbl = new JLabel();
+			zombieIncomeLbl.setText(formatFunds(f.zombieIncome));
+			balancePane.add(zombieIncomeLbl, c1);
 
 			c1.gridy++;
 			JLabel capExpensesLbl = new JLabel();
