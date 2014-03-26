@@ -1331,6 +1331,7 @@ public class Micropolis
 		public int [] money = new int[240];
 		public int [] pollution = new int[240];
 		public int [] crime = new int[240];
+		public int [] zombies = new int[240];
 		int resMax;
 		int comMax;
 		int indMax;
@@ -1339,6 +1340,7 @@ public class Micropolis
 
 	void setValves()
 	{
+		
 		double normResPop = (double)resPop / 8.0;
 		totalPop = (int) (normResPop + comPop + indPop);
 
@@ -1719,6 +1721,7 @@ public class Micropolis
 			history.crime[i + 1] = history.crime[i];
 			history.pollution[i + 1] = history.pollution[i];
 			history.money[i + 1] = history.money[i];
+			history.zombies[i + 1] = history.zombies[i];
 		}
 
 		history.resMax = resMax;
@@ -1743,6 +1746,7 @@ public class Micropolis
 		if (moneyScaled > 255)
 			moneyScaled = 255;
 		history.money[0] = moneyScaled;
+		history.zombies[0] = zombieCount;
 
 		history.cityTime = cityTime;
 
@@ -1795,6 +1799,7 @@ public class Micropolis
 			history.crime[i + 1] = history.crime[i];
 			history.pollution[i + 1] = history.pollution[i];
 			history.money[i + 1] = history.money[i];
+			history.zombies[i + 1] = history.zombies[i];
 		}
 
 		history.res[120] = resPop / 8;
@@ -1803,6 +1808,7 @@ public class Micropolis
 		history.crime[120] = history.crime[0];
 		history.pollution[120] = history.pollution[0];
 		history.money[120] = history.money[0];
+		history.zombies[120] = history.zombies[0];
 	}
 
 	/** Road/rail maintenance cost multiplier, for various difficulty settings.
@@ -2316,6 +2322,7 @@ public class Micropolis
 		loadHistoryArray(history.crime, dis);
 		loadHistoryArray(history.pollution, dis);
 		loadHistoryArray(history.money, dis);
+		loadHistoryArray(history.zombies, dis);
 		loadMisc(dis);
 		loadMap(dis);
 		dis.close();
@@ -2345,6 +2352,7 @@ public class Micropolis
 		writeHistoryArray(history.crime, out);
 		writeHistoryArray(history.pollution, out);
 		writeHistoryArray(history.money, out);
+		writeHistoryArray(history.zombies, out);
 		writeMisc(out);
 		writeMap(out);
 		out.close();
