@@ -40,7 +40,8 @@ public class GraphsPane extends JPanel
 		INDPOP,
 		MONEY,
 		CRIME,
-		POLLUTION;
+		POLLUTION,
+		ZOMBIES;
 	}
 	EnumMap<GraphData,JToggleButton> dataBtns = new EnumMap<GraphData,JToggleButton>(GraphData.class);
 
@@ -116,6 +117,11 @@ public class GraphsPane extends JPanel
 
 		c.gridy = 4;
 		toolsPane.add(makeDataBtn(GraphData.POLLUTION), c);
+		
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 2;
+		toolsPane.add(makeDataBtn(GraphData.ZOMBIES), c);
 
 		graphArea = new GraphArea();
 		b1.add(graphArea, BorderLayout.CENTER);
@@ -203,6 +209,8 @@ public class GraphsPane extends JPanel
 		case MONEY: return engine.history.money[pos];
 		case CRIME: return engine.history.crime[pos];
 		case POLLUTION: return engine.history.pollution[pos];
+		case ZOMBIES: return engine.history.pollution[pos];
+
 		default: throw new Error("unexpected");
 		}
 	}
