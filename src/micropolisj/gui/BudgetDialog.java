@@ -391,7 +391,7 @@ public class BudgetDialog extends JDialog
 			Micropolis.FinancialHistory f = engine.financialHistory.get(i);
 			Micropolis.FinancialHistory fPrior = engine.financialHistory.get(i+1);
 			int cashFlow = f.totalFunds - fPrior.totalFunds;
-			int capExpenses = -(cashFlow - f.taxIncome - f.zombieIncome + f.operatingExpenses);
+			int capExpenses = -(cashFlow - f.taxIncome + f.operatingExpenses);
 
 			c1.gridx++;
 			c1.gridy = 0;
