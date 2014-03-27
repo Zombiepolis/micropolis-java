@@ -2165,6 +2165,8 @@ public class Micropolis
 		{
 			oldMapLoaded = -1;
 			simSpeed = Speed.PAUSED;
+			zombiespawn_x= DEFAULT_WIDTH/2;
+			zombiespawn_y= DEFAULT_HEIGHT/2;
 			if (zombLevel != 1 && zombLevel != 2) {
 				zombLevel = 1;
 			}
