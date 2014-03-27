@@ -917,21 +917,21 @@ public class Micropolis
 
 	private void hunterMEradius(int ypos, int xpos, int i)
 	{
-		for (int y = -5; y <= 5; y++) {
-			for (int x = -5; x <= 5; x++) {
+		for (int y = -22; y <= 22; y++) {
+			for (int x = -22; x <= 22; x++) {
 				int distance = Math.abs(x) + Math.abs(y);
 				if (xpos + x < 0 || ypos + y < 0 || xpos + x >= hunterMap[ypos].length || ypos + y >= hunterMap.length)
 				{
-				} else if ( distance == 5 && i == 1 )
+				} else if ( (distance == 21 || distance == 22 ) && i == 1 )
 				{
 					hunterMapEffect[ypos + y][xpos + x] = 250;
-				} else if ( distance == 5 && i == 2 )
+				} else if ( (distance == 21 || distance == 22 ) && i == 2 )
 				{	
 					hunterMapEffect[ypos + y][xpos + x] = 750;
-				} else if ( distance < 5 && i == 1 )
+				} else if ( distance < 21 && i == 1 )
 				{
 					hunterMapEffect[ypos + y][xpos + x] = 500;
-				} else if  ( distance < 5 && i == 2 )
+				} else if  ( distance < 21 && i == 2 )
 				{
 					hunterMapEffect[ypos + y][xpos + x] = 1000;
 				}

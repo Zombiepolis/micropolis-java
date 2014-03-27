@@ -192,6 +192,9 @@ public abstract class Sprite
 			}
 			if (isZoneCenter(t)) {
 				city.killZone(xpos, ypos, t);
+				if (t == 964) {
+					city.hunterMap[ypos][xpos] = 0;
+				}
 				if (t > RZB) {
 					city.makeExplosion(xpos, ypos);
 				}

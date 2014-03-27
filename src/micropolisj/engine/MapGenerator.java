@@ -601,9 +601,9 @@ public class MapGenerator
 				plusMinusX = PRNG.nextInt(2);
 				if (plusMinusX == 0)
 				{
-					x_centre += PRNG.nextInt(X_WORLD/10);
+					x_centre += PRNG.nextInt(X_WORLD/4);
 				} else {
-					x_centre -= PRNG.nextInt(X_WORLD/10);
+					x_centre -= PRNG.nextInt(X_WORLD/4);
 				}
 			} while ( ( (5 >= x_centre) || (x_centre >= X_WORLD - 12) ) );
 			
@@ -612,13 +612,13 @@ public class MapGenerator
 				plusMinusY = PRNG.nextInt(2);
 				if (plusMinusY == 0)
 				{
-					y_centre += PRNG.nextInt(Y_WORLD/10);
+					y_centre += PRNG.nextInt(Y_WORLD/4);
 				} else {
-					y_centre -= PRNG.nextInt(Y_WORLD/10);
+					y_centre -= PRNG.nextInt(Y_WORLD/4);
 				}
-			} while ( ( (5 >= y_centre) || (y_centre >= Y_WORLD - 10) ) );
+			} while ( ( (5 >= y_centre) || (y_centre >= Y_WORLD - 12) ) );
 
-			if ((x_centre < 91) && (y_centre < 91))
+			if ((x_centre < (X_WORLD-11)) && (y_centre < (Y_WORLD-11)))
 			{
 				char chTmp = map[y_centre][x_centre];
 				if ( (chTmp ==  RIVER) || (chTmp == REDGE) || (chTmp == CHANNEL) )
