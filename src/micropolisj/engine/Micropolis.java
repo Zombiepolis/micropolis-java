@@ -924,16 +924,28 @@ public class Micropolis
 				{
 				} else if ( (distance == 21 || distance == 22 ) && i == 1 )
 				{
-					hunterMapEffect[ypos + y][xpos + x] = 250;
+					if (hunterMapEffect[ypos + y][xpos + x] > 250) {
+					} else {
+						hunterMapEffect[ypos + y][xpos + x] = 250;
+					}
 				} else if ( (distance == 21 || distance == 22 ) && i == 2 )
 				{	
-					hunterMapEffect[ypos + y][xpos + x] = 750;
+					if (hunterMapEffect[ypos + y][xpos + x] > 750) {
+					} else {
+						hunterMapEffect[ypos + y][xpos + x] = 750;
+					}
 				} else if ( distance < 21 && i == 1 )
 				{
-					hunterMapEffect[ypos + y][xpos + x] = 500;
+					if (hunterMapEffect[ypos + y][xpos + x] > 500) {
+					} else {
+						hunterMapEffect[ypos + y][xpos + x] = 500;
+					}
 				} else if  ( distance < 21 && i == 2 )
 				{
-					hunterMapEffect[ypos + y][xpos + x] = 1000;
+					if (hunterMapEffect[ypos + y][xpos + x] > 1000) {
+					} else {
+						hunterMapEffect[ypos + y][xpos + x] = 1000;
+					}
 				}
 			}
 		}
