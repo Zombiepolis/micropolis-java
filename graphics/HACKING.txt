@@ -2,7 +2,7 @@
 The Recipe File
 ===============
 
-The `tiles.dat' file is the recipe file for generating the tiles.
+The `tiles.rc' file is the recipe file for generating the tiles.
 It is a plain-text file, where each line begins with a tile id,
 followed by an image specification.
 
@@ -20,14 +20,14 @@ Generating the composite image
 
 To build a new tiles.png file, do the following:
 
-1. Open a command-prompt, and cd to the micropolis-java directory.
+1. Open a command-prompt, and cd to the zombiepolis directory.
 
-2. Build Micropolis by typing the following command:
+2. Build Zombiepolis by typing the following command:
 
     ant
 
 3. The generated tiles.png file can be found in the build/ subdirectory.
 
-4. Now you can run Micropolis with the new graphics. Type:
+4. Now you can run Zombiepolis with the new graphics. Type:
 
     java -jar micropolisj.jar

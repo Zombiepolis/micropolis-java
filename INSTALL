@@ -17,8 +17,8 @@ Building the Package
 Installing Zombiepolis
 ======================
 
-Everything you need to run the program is contained within the micropolisj.jar
-file, so just copy that file to wherever you like.
+To run the program you need the micropolisj.jar file and the graphics directory.
+So just copy those to objects to wherever you like.
 
 
 Running Zombiepolis

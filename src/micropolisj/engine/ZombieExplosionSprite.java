@@ -1,8 +1,8 @@
-// This file is part of MicropolisJ.
-// Copyright (C) 2013 Jason Long
-// Portions Copyright (C) 1989-2007 Electronic Arts Inc.
+// This file is part of Zombiepolis
+// Zombiepolis is based on MicropolisJ
+// Copyright (C) 2014 Brier Hylen Field, Max Marcuse, Sophie Arana, Ahlam Ismail, Carsten Keller, Nina Gerber, Anthea Wiederspohn for Zombiepolis
 //
-// MicropolisJ is free software; you can redistribute it and/or modify
+// Zombiepolis is free software; you can redistribute it and/or modify
 // it under the terms of the GNU GPLv3, with additional terms.
 // See the README file, included in this distribution, for details.
 

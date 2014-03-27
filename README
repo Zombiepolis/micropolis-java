@@ -3,27 +3,18 @@
 Zombiepolis
 -----------
 
-Zombiepolis is an extension of the MicropolisJ game.
+Zombiepolis is an extension of the MicropolisJ game. It adds the szenario
+of a zombie invasion to the original game.
 
-========================================================================
+Copyright (C) 2014 
+Brier Hylen Field
+Max Marcuse
+Sophie Arana
+Ahlam Ismail
+Carsten Keller
+Nina Gerber
+Anthea Wiederspohn
 
-About MicropolisJ
------------------
-
-MicropolisJ is Micropolis for the Java platform.
-Copyright (C) 2013 Jason Long (jason@long.name).
-Portions Copyright (C) 1989-2007 Electronic Arts Inc.
-
-MicropolisJ is based on Micropolis, Unix version, which was developed by
-Don Hopkins (dhopkins@DonHopkins.com, http://www.DonHopkins.com) for
-DUX Software under license from Maxis, in or around 1990.  This version
-was later modified for inclusion in the One Laptop Per Child (OLPC)
-program, and released as free and open source software under the GPL in
-2008.
-Copyright (C) 1989-2007 Electronic Arts Inc.
-
-The original Micropolis game was designed and implemented by Will Wright.
-Copyright (C) 2002 by Electronic Arts.
 
 ========================================================================
 
@@ -45,6 +36,26 @@ source code release.
 
 See the COPYING file for the full text copy of the GNU General Public
 License.
+
+========================================================================
+
+About MicropolisJ
+-----------------
+
+MicropolisJ is Micropolis for the Java platform.
+Portions Copyright (C) 2013 Jason Long (jason@long.name).
+Portions Copyright (C) 1989-2007 Electronic Arts Inc.
+
+MicropolisJ is based on Micropolis, Unix version, which was developed by
+Don Hopkins (dhopkins@DonHopkins.com, http://www.DonHopkins.com) for
+DUX Software under license from Maxis, in or around 1990.  This version
+was later modified for inclusion in the One Laptop Per Child (OLPC)
+program, and released as free and open source software under the GPL in
+2008.
+Copyright (C) 1989-2007 Electronic Arts Inc.
+
+The original Micropolis game was designed and implemented by Will Wright.
+Copyright (C) 2002 by Electronic Arts.
 
 ========================================================================
 
